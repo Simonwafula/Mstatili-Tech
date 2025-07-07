@@ -392,7 +392,7 @@ function App() {
                   </div>
                   <div>
                     <p className="font-semibold">Email</p>
-                    <p className="text-primary-100">info@mstatili.co.ke</p>
+                    <p className="text-primary-100">info@mstatilitechnologies.com</p>
                   </div>
                 </div>
                 
