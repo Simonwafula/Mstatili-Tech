@@ -60,16 +60,76 @@ class MstatiliBackendTests(unittest.TestCase):
             self.assertIsInstance(service["features"], list)
             self.assertTrue(len(service["features"]) > 0, f"Service {service['id']} has empty features list")
         
-        print("✅ Services endpoint test passed")
+        # Check enhanced data solutions service
+        data_solutions = next((s for s in services if s["id"] == "data-solutions"), None)
+        self.assertIsNotNone(data_solutions, "Data solutions service not found")
+        
+        # Verify data solutions title is correct
+        self.assertEqual(data_solutions["name"], "Data Solutions & Ecosystem Planning", 
+                         "Data solutions service name is incorrect")
+        
+        # Verify enhanced description mentions strategy to execution
+        self.assertIn("strategy to execution", data_solutions["description"].lower(), 
+                      "Data solutions description should mention 'strategy to execution'")
+        
+        # Verify data solutions has 8 detailed features
+        self.assertEqual(len(data_solutions["features"]), 8, 
+                         f"Expected 8 data solutions features, got {len(data_solutions['features'])}")
+        
+        # Verify detailed_services exists for data solutions
+        self.assertIn("detailed_services", data_solutions, 
+                      "Data solutions service missing detailed_services field")
+        self.assertIsInstance(data_solutions["detailed_services"], list)
+        self.assertTrue(len(data_solutions["detailed_services"]) > 0, 
+                        "Data solutions detailed_services list is empty")
+        
+        print("✅ Services endpoint test passed with enhanced data solutions verification")
+    
+    def test_data_solutions_detail_endpoint(self):
+        """Test the new data solutions detail endpoint"""
+        response = requests.get(f"{API_BASE_URL}/data-solutions-detail")
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        
+        # Check required fields
+        required_fields = ["title", "subtitle", "overview", "planning_phases", 
+                           "key_benefits", "technologies"]
+        for field in required_fields:
+            self.assertIn(field, data, f"Data solutions detail missing required field: {field}")
+        
+        # Verify title is correct
+        self.assertEqual(data["title"], "Data Solutions & Ecosystem Planning", 
+                         "Data solutions detail title is incorrect")
+        
+        # Verify planning phases
+        self.assertIsInstance(data["planning_phases"], list)
+        self.assertEqual(len(data["planning_phases"]), 5, 
+                         f"Expected 5 planning phases, got {len(data['planning_phases'])}")
+        
+        # Verify each planning phase has required fields
+        phase_fields = ["phase", "description", "deliverables"]
+        for phase in data["planning_phases"]:
+            for field in phase_fields:
+                self.assertIn(field, phase, f"Planning phase missing required field: {field}")
+        
+        # Verify key benefits
+        self.assertIsInstance(data["key_benefits"], list)
+        self.assertTrue(len(data["key_benefits"]) > 0, "Key benefits list is empty")
+        
+        # Verify technologies
+        self.assertIsInstance(data["technologies"], list)
+        self.assertTrue(len(data["technologies"]) > 0, "Technologies list is empty")
+        
+        print("✅ Data solutions detail endpoint test passed")
     
     def test_contact_form_submission(self):
-        """Test contact form submission and database insertion"""
+        """Test contact form submission and database insertion with updated contact info"""
         test_data = {
             "name": "Test Contact",
-            "email": "test.contact@example.com",
-            "phone": "+254712345678",
+            "email": "info@mstatilitechnologies.com",  # Updated email
+            "phone": "+254 708 385 523",  # Updated phone format
             "company": "Test Company Ltd",
-            "service": "branding",
+            "service": "data-solutions",  # Testing with data solutions
             "message": "This is a test message for the contact form."
         }
         
@@ -92,18 +152,18 @@ class MstatiliBackendTests(unittest.TestCase):
         self.assertIn("id", db_record)
         self.assertIn("created_at", db_record)
         
-        print("✅ Contact form submission test passed")
+        print("✅ Contact form submission test passed with updated contact information")
     
     def test_service_inquiry_submission(self):
-        """Test service inquiry submission and database insertion"""
+        """Test service inquiry submission and database insertion with updated contact info"""
         test_data = {
             "name": "Test Inquiry",
-            "email": "test.inquiry@example.com",
-            "phone": "+254787654321",
+            "email": "info@mstatilitechnologies.com",  # Updated email
+            "phone": "+254 708 385 523",  # Updated phone format
             "service_type": "data-solutions",
-            "project_details": "This is a test project for data analysis and reporting.",
-            "budget_range": "$5,000 - $10,000",
-            "timeline": "3 months"
+            "project_details": "This is a test project for comprehensive data ecosystem planning.",
+            "budget_range": "$10,000 - $20,000",
+            "timeline": "6 months"
         }
         
         # Submit service inquiry
@@ -126,7 +186,7 @@ class MstatiliBackendTests(unittest.TestCase):
         self.assertIn("id", db_record)
         self.assertIn("created_at", db_record)
         
-        print("✅ Service inquiry submission test passed")
+        print("✅ Service inquiry submission test passed with updated contact information")
     
     def test_contact_form_validation(self):
         """Test validation for contact form submission"""
