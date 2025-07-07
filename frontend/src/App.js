@@ -382,7 +382,7 @@ function App() {
                   </div>
                   <div>
                     <p className="font-semibold">Phone</p>
-                    <p className="text-primary-100">+254 700 000 000</p>
+                    <p className="text-primary-100">+254 708 385 523</p>
                   </div>
                 </div>
                 
