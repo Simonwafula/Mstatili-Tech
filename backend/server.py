@@ -128,10 +128,45 @@ async def get_services():
         },
         {
             "id": "data-solutions",
-            "name": "Data Solutions",
-            "description": "Comprehensive data services from collection to analysis and reporting",
+            "name": "Data Solutions & Ecosystem Planning",
+            "description": "Comprehensive data ecosystem planning and implementation - from strategy to execution, ensuring data-driven transformation",
             "icon": "📊",
-            "features": ["Data Collection", "Data Analysis", "Report Writing", "Data Advisory"]
+            "features": [
+                "Data Strategy & Roadmap Planning",
+                "Data Architecture Design", 
+                "Data Governance & Quality Management",
+                "Data Integration & Pipeline Development",
+                "Advanced Analytics & Business Intelligence",
+                "Data Security & Compliance",
+                "Performance Monitoring & Optimization",
+                "Training & Change Management"
+            ],
+            "detailed_services": [
+                {
+                    "name": "Data Strategy & Planning",
+                    "description": "Comprehensive data strategy aligned with business objectives, including roadmap development and stakeholder engagement"
+                },
+                {
+                    "name": "Data Architecture & Infrastructure",
+                    "description": "Scalable data architecture design, technology stack assessment, and infrastructure optimization"
+                },
+                {
+                    "name": "Data Governance & Quality",
+                    "description": "Establish data governance policies, quality assurance processes, and stewardship frameworks"
+                },
+                {
+                    "name": "Analytics & Intelligence",
+                    "description": "Advanced analytics implementation, AI/ML integration, and business intelligence dashboards"
+                },
+                {
+                    "name": "Data Integration & Management",
+                    "description": "Seamless data integration across systems, pipeline development, and automated data processing"
+                },
+                {
+                    "name": "Compliance & Security",
+                    "description": "Data privacy compliance (GDPR, local regulations), security implementation, and risk management"
+                }
+            ]
         }
     ]
     return {"services": services}
