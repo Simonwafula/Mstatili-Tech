@@ -171,6 +171,58 @@ async def get_services():
     ]
     return {"services": services}
 
+@app.get("/api/data-solutions-detail")
+async def get_data_solutions_detail():
+    data_solutions = {
+        "title": "Data Solutions & Ecosystem Planning",
+        "subtitle": "From Strategy to Implementation - Complete Data Transformation",
+        "overview": "We provide end-to-end data ecosystem planning and implementation services, helping organizations transform their data into strategic business assets. Our approach follows industry best practices and ensures sustainable, scalable data solutions.",
+        "planning_phases": [
+            {
+                "phase": "1. Discovery & Assessment",
+                "description": "Current state analysis, stakeholder mapping, and objective definition",
+                "deliverables": ["Data audit report", "Stakeholder analysis", "Gap assessment", "Business requirements"]
+            },
+            {
+                "phase": "2. Strategy & Planning",
+                "description": "Data strategy development, roadmap creation, and governance framework design",
+                "deliverables": ["Data strategy document", "Implementation roadmap", "Governance framework", "Success metrics"]
+            },
+            {
+                "phase": "3. Architecture & Design",
+                "description": "Technical architecture design, technology selection, and infrastructure planning",
+                "deliverables": ["System architecture", "Technology recommendations", "Security framework", "Integration plan"]
+            },
+            {
+                "phase": "4. Implementation",
+                "description": "System deployment, data integration, and process implementation",
+                "deliverables": ["Deployed systems", "Data pipelines", "Quality processes", "Training materials"]
+            },
+            {
+                "phase": "5. Optimization & Support",
+                "description": "Performance monitoring, continuous improvement, and ongoing support",
+                "deliverables": ["Performance reports", "Optimization recommendations", "Support documentation", "Training programs"]
+            }
+        ],
+        "key_benefits": [
+            "Improved decision-making through data-driven insights",
+            "Increased operational efficiency and cost reduction",
+            "Enhanced data quality and governance",
+            "Better compliance and risk management",
+            "Scalable and future-proof data infrastructure",
+            "Competitive advantage through advanced analytics"
+        ],
+        "technologies": [
+            "Cloud Data Platforms (AWS, Azure, GCP)",
+            "Data Warehousing & Lakes",
+            "ETL/ELT Tools",
+            "Business Intelligence Platforms",
+            "Machine Learning & AI Tools",
+            "Data Visualization Tools"
+        ]
+    }
+    return data_solutions
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8001)
