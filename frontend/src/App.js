@@ -553,7 +553,7 @@ function App() {
             <div>
               <h3 className="font-semibold mb-4">Contact Info</h3>
               <div className="space-y-2 text-sm text-gray-400">
-                <p>📧 info@mstatili.co.ke</p>
+                <p>📧 info@mstatilitechnologies.com</p>
                 <p>📞 +254 708 385 523</p>
                 <p>📍 Nairobi, Kenya</p>
               </div>
