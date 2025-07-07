@@ -20,6 +20,8 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001'
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [services, setServices] = useState([]);
+  const [dataServiceDetails, setDataServiceDetails] = useState(null);
+  const [showDataDetails, setShowDataDetails] = useState(false);
   const [contactForm, setContactForm] = useState({
     name: '',
     email: '',
@@ -33,6 +35,7 @@ function App() {
 
   useEffect(() => {
     fetchServices();
+    fetchDataServiceDetails();
   }, []);
 
   const fetchServices = async () => {
@@ -41,6 +44,15 @@ function App() {
       setServices(response.data.services);
     } catch (error) {
       console.error('Error fetching services:', error);
+    }
+  };
+
+  const fetchDataServiceDetails = async () => {
+    try {
+      const response = await axios.get(`${BACKEND_URL}/api/data-solutions-detail`);
+      setDataServiceDetails(response.data);
+    } catch (error) {
+      console.error('Error fetching data service details:', error);
     }
   };
 
