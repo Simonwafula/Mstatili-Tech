@@ -264,3 +264,8 @@ if __name__ == "__main__":
     print("Starting Mstatili Tech and Data Solutions Backend API Tests...")
     print(f"Testing backend at: {API_BASE_URL}")
     unittest.main(verbosity=2)
+
+if __name__ == "__main__":
+    print("Starting Mstatili Tech and Data Solutions Backend API Tests...")
+    print(f"Testing backend at: {API_BASE_URL}")
+    unittest.main(verbosity=2)
