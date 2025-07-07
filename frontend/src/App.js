@@ -112,9 +112,11 @@ function App() {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-primary-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-xl">M</span>
-              </div>
+              <img 
+                src="https://raw.githubusercontent.com/Simonwafula/Mstatili-Tech/main/Mstatili%20Logo.png" 
+                alt="Mstatili Technologies Logo" 
+                className="w-12 h-12 object-contain"
+              />
               <div>
                 <h1 className="text-lg font-display font-bold text-gray-900">Mstatili Technologies</h1>
                 <p className="text-xs text-gray-600">Tech & Data Solutions</p>
