@@ -698,7 +698,7 @@ function App() {
                 <img 
                   src="https://raw.githubusercontent.com/Simonwafula/Mstatili-Tech/main/Mstatili%20Logo.png" 
                   alt="Mstatili Technologies Logo" 
-                  className="h-12 w-auto object-contain"
+                  className="h-16 w-auto object-contain"
                 />
               </div>
               <p className="text-gray-300 text-lg mb-6 leading-relaxed">
