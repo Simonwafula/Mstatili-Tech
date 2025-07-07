@@ -320,12 +320,110 @@ function App() {
                       </div>
                     ))}
                   </div>
+                  {service.id === 'data-solutions' && (
+                    <button
+                      onClick={() => setShowDataDetails(!showDataDetails)}
+                      className="mt-6 btn-primary text-sm"
+                    >
+                      {showDataDetails ? 'Hide Details' : 'Learn More'}
+                    </button>
+                  )}
                 </div>
               );
             })}
           </div>
         </div>
       </section>
+
+      {/* Data Solutions Detail Section */}
+      {showDataDetails && dataServiceDetails && (
+        <section className="bg-white">
+          <div className="container-custom section-padding">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-display font-bold text-gray-900 mb-4">
+                {dataServiceDetails.title}
+              </h2>
+              <p className="text-xl text-gray-600 max-w-4xl mx-auto mb-8">
+                {dataServiceDetails.subtitle}
+              </p>
+              <p className="text-lg text-gray-700 max-w-5xl mx-auto">
+                {dataServiceDetails.overview}
+              </p>
+            </div>
+
+            {/* Planning Phases */}
+            <div className="mb-16">
+              <h3 className="text-3xl font-display font-bold text-gray-900 mb-8 text-center">
+                Our Data Planning Process
+              </h3>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {dataServiceDetails.planning_phases.map((phase, index) => (
+                  <div key={index} className="card p-6">
+                    <div className="flex items-center space-x-3 mb-4">
+                      <div className="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center">
+                        <span className="text-white font-bold text-sm">{index + 1}</span>
+                      </div>
+                      <h4 className="text-lg font-semibold text-gray-900">{phase.phase}</h4>
+                    </div>
+                    <p className="text-gray-600 mb-4">{phase.description}</p>
+                    <div className="space-y-2">
+                      <h5 className="text-sm font-semibold text-gray-900">Key Deliverables:</h5>
+                      <ul className="text-sm text-gray-600 space-y-1">
+                        {phase.deliverables.map((deliverable, idx) => (
+                          <li key={idx} className="flex items-center space-x-2">
+                            <CheckCircleIcon className="h-3 w-3 text-primary-600" />
+                            <span>{deliverable}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Key Benefits */}
+            <div className="grid lg:grid-cols-2 gap-12 mb-16">
+              <div>
+                <h3 className="text-2xl font-display font-bold text-gray-900 mb-6">
+                  Key Benefits
+                </h3>
+                <div className="space-y-4">
+                  {dataServiceDetails.key_benefits.map((benefit, index) => (
+                    <div key={index} className="flex items-start space-x-3">
+                      <CheckCircleIcon className="h-5 w-5 text-primary-600 mt-1" />
+                      <span className="text-gray-700">{benefit}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-2xl font-display font-bold text-gray-900 mb-6">
+                  Technologies We Use
+                </h3>
+                <div className="grid grid-cols-2 gap-4">
+                  {dataServiceDetails.technologies.map((tech, index) => (
+                    <div key={index} className="bg-gray-50 p-3 rounded-lg text-center">
+                      <span className="text-sm font-medium text-gray-700">{tech}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* CTA */}
+            <div className="text-center">
+              <button
+                onClick={() => scrollToSection('contact')}
+                className="btn-primary text-lg px-8 py-4"
+              >
+                Start Your Data Transformation Journey
+              </button>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Why Choose Us Section */}
       <section className="bg-white">
