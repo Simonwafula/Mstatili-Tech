@@ -198,7 +198,7 @@ function App() {
               
               <h2 className="text-6xl lg:text-7xl font-display font-bold text-gray-900 mb-8 leading-tight">
                 Transform Your Business with 
-                <span className="text-gradient block mt-2 animate-gradient bg-[length:400%_400%]">Tech Excellence</span>
+                <span className="text-gradient block mt-2">Tech Excellence</span>
               </h2>
               
               <p className="text-xl text-gray-700 mb-10 text-balance leading-relaxed">
