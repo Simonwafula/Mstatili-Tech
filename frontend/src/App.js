@@ -115,7 +115,7 @@ function App() {
               <img 
                 src="https://raw.githubusercontent.com/Simonwafula/Mstatili-Tech/main/Mstatili%20Logo.png" 
                 alt="Mstatili Technologies Logo" 
-                className="h-14 w-auto object-contain hover:scale-105 transition-transform duration-300"
+                className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-300"
               />
             </div>
 
