@@ -687,61 +687,88 @@ function App() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-secondary-900 text-white">
-        <div className="container-custom py-12">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
-              <div className="flex items-center space-x-3 mb-4">
+      <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white relative overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 pattern-dots opacity-10"></div>
+        
+        <div className="container-custom py-16 relative z-10">
+          <div className="grid md:grid-cols-4 gap-12">
+            <div className="md:col-span-2">
+              <div className="flex items-center space-x-4 mb-6">
                 <img 
                   src="https://raw.githubusercontent.com/Simonwafula/Mstatili-Tech/main/Mstatili%20Logo.png" 
                   alt="Mstatili Technologies Logo" 
-                  className="w-10 h-10 object-contain"
+                  className="h-12 w-auto object-contain"
                 />
-                <div>
-                  <h3 className="font-display font-bold">Mstatili Technologies</h3>
-                  <p className="text-sm text-gray-400">Tech & Data Solutions</p>
+              </div>
+              <p className="text-gray-300 text-lg mb-6 leading-relaxed">
+                Transforming businesses through innovative technology solutions in Kenya and beyond. 
+                Your trusted partner for digital transformation and data-driven growth.
+              </p>
+              <div className="flex space-x-4">
+                <div className="w-12 h-12 bg-gradient-to-br from-vibrant-blue to-vibrant-cyan rounded-xl flex items-center justify-center hover:scale-110 transition-transform cursor-pointer">
+                  <span className="text-white font-bold">f</span>
+                </div>
+                <div className="w-12 h-12 bg-gradient-to-br from-vibrant-purple to-vibrant-pink rounded-xl flex items-center justify-center hover:scale-110 transition-transform cursor-pointer">
+                  <span className="text-white font-bold">t</span>
+                </div>
+                <div className="w-12 h-12 bg-gradient-to-br from-vibrant-orange to-vibrant-green rounded-xl flex items-center justify-center hover:scale-110 transition-transform cursor-pointer">
+                  <span className="text-white font-bold">in</span>
                 </div>
               </div>
-              <p className="text-gray-400 text-sm">
-                Transforming businesses through innovative technology solutions in Kenya and beyond.
-              </p>
             </div>
             
             <div>
-              <h3 className="font-semibold mb-4">Services</h3>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li><a href="#services" className="hover:text-white transition-colors">Branding Solutions</a></li>
-                <li><a href="#services" className="hover:text-white transition-colors">App Development</a></li>
-                <li><a href="#services" className="hover:text-white transition-colors">Automation</a></li>
-                <li><a href="#services" className="hover:text-white transition-colors">AI Solutions</a></li>
-                <li><a href="#services" className="hover:text-white transition-colors">Data Analytics</a></li>
+              <h3 className="font-bold text-xl mb-6 text-vibrant-blue">Our Services</h3>
+              <ul className="space-y-3 text-gray-300">
+                <li><a href="#services" className="hover:text-vibrant-blue transition-colors hover:translate-x-2 transform duration-300 block">Branding Solutions</a></li>
+                <li><a href="#services" className="hover:text-vibrant-blue transition-colors hover:translate-x-2 transform duration-300 block">App Development</a></li>
+                <li><a href="#services" className="hover:text-vibrant-blue transition-colors hover:translate-x-2 transform duration-300 block">Automation</a></li>
+                <li><a href="#services" className="hover:text-vibrant-blue transition-colors hover:translate-x-2 transform duration-300 block">AI Solutions</a></li>
+                <li><a href="#services" className="hover:text-vibrant-blue transition-colors hover:translate-x-2 transform duration-300 block">Data Analytics</a></li>
               </ul>
             </div>
             
             <div>
-              <h3 className="font-semibold mb-4">Company</h3>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li><a href="#about" className="hover:text-white transition-colors">About Us</a></li>
-                <li><a href="#contact" className="hover:text-white transition-colors">Contact</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Careers</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Privacy Policy</a></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h3 className="font-semibold mb-4">Contact Info</h3>
-              <div className="space-y-2 text-sm text-gray-400">
-                <p>📧 info@mstatilitechnologies.com</p>
-                <p>📞 +254 708 385 523</p>
-                <p>📍 Nairobi, Kenya</p>
+              <h3 className="font-bold text-xl mb-6 text-vibrant-cyan">Contact Info</h3>
+              <div className="space-y-4 text-gray-300">
+                <div className="flex items-center space-x-3">
+                  <div className="w-8 h-8 bg-vibrant-blue rounded-lg flex items-center justify-center">
+                    <span className="text-xs">📧</span>
+                  </div>
+                  <span>info@mstatilitechnologies.com</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <div className="w-8 h-8 bg-vibrant-green rounded-lg flex items-center justify-center">
+                    <span className="text-xs">📞</span>
+                  </div>
+                  <span>+254 708 385 523</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <div className="w-8 h-8 bg-vibrant-purple rounded-lg flex items-center justify-center">
+                    <span className="text-xs">📍</span>
+                  </div>
+                  <span>Nairobi, Kenya</span>
+                </div>
               </div>
             </div>
           </div>
           
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
-            <p>&copy; 2024 Mstatili Tech and Data Solutions. All rights reserved.</p>
+          <div className="border-t border-gray-700 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+            <p className="text-gray-400 text-sm">
+              &copy; 2024 Mstatili Technologies. All rights reserved.
+            </p>
+            <div className="flex space-x-6 mt-4 md:mt-0">
+              <a href="#" className="text-gray-400 hover:text-vibrant-blue transition-colors text-sm">Privacy Policy</a>
+              <a href="#" className="text-gray-400 hover:text-vibrant-blue transition-colors text-sm">Terms of Service</a>
+              <a href="#" className="text-gray-400 hover:text-vibrant-blue transition-colors text-sm">Cookie Policy</a>
+            </div>
           </div>
         </div>
+        
+        {/* Decorative Elements */}
+        <div className="absolute bottom-0 left-0 w-32 h-32 bg-vibrant-blue/10 rounded-full blur-3xl"></div>
+        <div className="absolute top-0 right-0 w-40 h-40 bg-vibrant-purple/10 rounded-full blur-3xl"></div>
       </footer>
     </div>
   );
