@@ -177,7 +177,7 @@ function App() {
       </header>
 
       {/* Hero Section */}
-      <section id="home" className="pt-20 min-h-screen flex items-center relative overflow-hidden">
+      <section id="home" className="pt-24 min-h-screen flex items-center relative overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 pattern-dots opacity-30"></div>
         <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-cyan-50/80 to-purple-50/60"></div>
