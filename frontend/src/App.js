@@ -360,7 +360,7 @@ function App() {
               return (
                 <div 
                   key={service.id} 
-                  className={`card-vibrant p-8 text-center animate-slideUp group hover:${glowColors[index % glowColors.length]} transition-all duration-500`} 
+                  className={`card-vibrant p-8 text-center animate-slideUp group transition-all duration-500`} 
                   style={{ animationDelay: `${index * 0.15}s` }}
                 >
                   <div className={`w-20 h-20 bg-gradient-to-br ${gradients[index % gradients.length]} rounded-3xl flex items-center justify-center mx-auto mb-8 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 shadow-xl`}>
