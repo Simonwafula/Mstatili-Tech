@@ -628,9 +628,11 @@ function App() {
           <div className="grid md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center space-x-3 mb-4">
-                <div className="w-10 h-10 bg-primary-600 rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-xl">M</span>
-                </div>
+                <img 
+                  src="https://raw.githubusercontent.com/Simonwafula/Mstatili-Tech/main/Mstatili%20Logo.png" 
+                  alt="Mstatili Technologies Logo" 
+                  className="w-10 h-10 object-contain"
+                />
                 <div>
                   <h3 className="font-display font-bold">Mstatili Technologies</h3>
                   <p className="text-sm text-gray-400">Tech & Data Solutions</p>
