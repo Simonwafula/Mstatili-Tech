@@ -177,61 +177,95 @@ function App() {
       </header>
 
       {/* Hero Section */}
-      <section id="home" className="pt-16 gradient-bg">
-        <div className="container-custom section-padding">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="animate-slideUp">
-              <h2 className="text-5xl lg:text-6xl font-display font-bold text-gray-900 mb-6">
+      <section id="home" className="pt-20 min-h-screen flex items-center relative overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 pattern-dots opacity-30"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-cyan-50/80 to-purple-50/60"></div>
+        
+        {/* Floating Elements */}
+        <div className="absolute top-20 left-10 w-20 h-20 bg-vibrant-blue/20 rounded-full blur-xl animate-bounce-slow"></div>
+        <div className="absolute top-40 right-20 w-32 h-32 bg-vibrant-purple/20 rounded-full blur-xl animate-pulse-slow"></div>
+        <div className="absolute bottom-40 left-20 w-24 h-24 bg-vibrant-pink/20 rounded-full blur-xl animate-float"></div>
+        
+        <div className="container-custom section-padding relative z-10">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="animate-slideRight">
+              <div className="mb-8">
+                <span className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-vibrant-blue/20 to-vibrant-cyan/20 text-vibrant-blue font-medium text-sm border border-vibrant-blue/30 animate-glow">
+                  🚀 Transforming Kenya's Digital Landscape
+                </span>
+              </div>
+              
+              <h2 className="text-6xl lg:text-7xl font-display font-bold text-gray-900 mb-8 leading-tight">
                 Transform Your Business with 
-                <span className="text-gradient block">Tech Excellence</span>
+                <span className="text-gradient block mt-2 animate-gradient bg-[length:400%_400%]">Tech Excellence</span>
               </h2>
-              <p className="text-xl text-gray-600 mb-8 text-balance">
-                Leading tech consultancy in Kenya, specializing in branding, app development, automation, AI solutions, and comprehensive data analytics to accelerate your business growth.
+              
+              <p className="text-xl text-gray-700 mb-10 text-balance leading-relaxed">
+                Leading tech consultancy in Kenya, specializing in <strong className="text-vibrant-blue">comprehensive data ecosystem planning</strong>, 
+                innovative branding, cutting-edge app development, intelligent automation, and AI-powered solutions to accelerate your business growth.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <button onClick={() => scrollToSection('services')} className="btn-primary">
-                  Explore Services
+              
+              <div className="flex flex-col sm:flex-row gap-6 mb-12">
+                <button onClick={() => scrollToSection('services')} className="btn-primary group">
+                  <span className="flex items-center">
+                    Explore Services
+                    <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                  </span>
                 </button>
-                <button onClick={() => scrollToSection('contact')} className="btn-secondary">
-                  Get Free Consultation
+                <button onClick={() => scrollToSection('contact')} className="btn-secondary group">
+                  <span className="flex items-center">
+                    Get Free Consultation
+                    <svg className="w-5 h-5 ml-2 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                    </svg>
+                  </span>
                 </button>
               </div>
               
-              {/* Stats */}
-              <div className="grid grid-cols-3 gap-8 mt-12 pt-8 border-t border-gray-200">
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-primary-600">50+</div>
-                  <div className="text-sm text-gray-600">Projects Completed</div>
+              {/* Enhanced Stats */}
+              <div className="grid grid-cols-3 gap-8 p-8 rounded-3xl bg-white/70 backdrop-blur-lg border border-white/30 creative-shadow">
+                <div className="text-center group">
+                  <div className="text-4xl font-bold bg-gradient-to-r from-vibrant-blue to-vibrant-cyan bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform">50+</div>
+                  <div className="text-sm text-gray-600 font-medium">Projects Completed</div>
                 </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-primary-600">95%</div>
-                  <div className="text-sm text-gray-600">Client Satisfaction</div>
+                <div className="text-center group">
+                  <div className="text-4xl font-bold bg-gradient-to-r from-vibrant-purple to-vibrant-pink bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform">95%</div>
+                  <div className="text-sm text-gray-600 font-medium">Client Satisfaction</div>
                 </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-primary-600">24/7</div>
-                  <div className="text-sm text-gray-600">Support Available</div>
+                <div className="text-center group">
+                  <div className="text-4xl font-bold bg-gradient-to-r from-vibrant-orange to-vibrant-green bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform">24/7</div>
+                  <div className="text-sm text-gray-600 font-medium">Support Available</div>
                 </div>
               </div>
             </div>
             
-            <div className="animate-fadeIn">
-              <div className="relative">
+            <div className="animate-slideLeft relative">
+              <div className="relative floating-element">
                 <img 
                   src="https://images.unsplash.com/photo-1650901161049-5a508b78388d" 
                   alt="Modern Technology Building" 
-                  className="w-full rounded-2xl shadow-2xl"
+                  className="w-full rounded-3xl shadow-2xl creative-shadow"
                 />
-                <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded-xl shadow-lg">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                      <CheckCircleIcon className="h-6 w-6 text-green-600" />
+                
+                {/* Floating Badge */}
+                <div className="absolute -bottom-8 -left-8 bg-white/90 backdrop-blur-lg p-6 rounded-2xl shadow-2xl border border-white/30 vibrant-card">
+                  <div className="flex items-center space-x-4">
+                    <div className="w-16 h-16 bg-gradient-to-br from-vibrant-green to-vibrant-blue rounded-2xl flex items-center justify-center glow-blue">
+                      <CheckCircleIcon className="h-8 w-8 text-white" />
                     </div>
                     <div>
-                      <p className="font-semibold text-gray-900">Kenya's Trusted</p>
-                      <p className="text-sm text-gray-600">Tech Partner</p>
+                      <p className="font-bold text-gray-900 text-lg">Kenya's Trusted</p>
+                      <p className="text-vibrant-blue font-semibold">Tech Innovation Partner</p>
                     </div>
                   </div>
                 </div>
+                
+                {/* Decorative Elements */}
+                <div className="absolute top-4 right-4 w-8 h-8 bg-vibrant-orange rounded-full animate-pulse"></div>
+                <div className="absolute top-20 left-4 w-6 h-6 bg-vibrant-purple rounded-full animate-bounce"></div>
               </div>
             </div>
           </div>
