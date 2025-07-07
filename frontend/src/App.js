@@ -327,41 +327,71 @@ function App() {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="bg-gray-50">
-        <div className="container-custom section-padding">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-display font-bold text-gray-900 mb-4">
-              Our Services
+      <section id="services" className="relative overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 pattern-grid opacity-20"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-blue-50/50 to-purple-50/30"></div>
+        
+        <div className="container-custom section-padding relative z-10">
+          <div className="text-center mb-20">
+            <span className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-vibrant-blue/20 to-vibrant-purple/20 text-vibrant-blue font-semibold text-sm border border-vibrant-blue/30 mb-6">
+              💼 Our Expert Services
+            </span>
+            <h2 className="text-5xl font-display font-bold text-gray-900 mb-6">
+              <span className="text-gradient">Innovative Solutions</span> for Modern Businesses
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Comprehensive technology solutions designed to accelerate your business growth and digital transformation
+            <p className="text-xl text-gray-600 max-w-4xl mx-auto">
+              Comprehensive technology solutions designed to accelerate your business growth and digital transformation with creativity and precision
             </p>
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, index) => {
               const IconComponent = serviceIcons[service.id] || BuildingOfficeIcon;
+              const gradients = [
+                'from-vibrant-blue to-vibrant-cyan',
+                'from-vibrant-purple to-vibrant-pink',
+                'from-vibrant-orange to-vibrant-green',
+                'from-vibrant-pink to-vibrant-purple',
+                'from-vibrant-cyan to-vibrant-blue'
+              ];
+              const glowColors = ['glow-blue', 'glow-purple', 'glow-pink', 'glow-blue', 'glow-purple'];
+              
               return (
-                <div key={service.id} className="card p-8 text-center animate-slideUp" style={{ animationDelay: `${index * 0.1}s` }}>
-                  <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <IconComponent className="h-8 w-8 text-primary-600" />
+                <div 
+                  key={service.id} 
+                  className={`card-vibrant p-8 text-center animate-slideUp group hover:${glowColors[index % glowColors.length]} transition-all duration-500`} 
+                  style={{ animationDelay: `${index * 0.15}s` }}
+                >
+                  <div className={`w-20 h-20 bg-gradient-to-br ${gradients[index % gradients.length]} rounded-3xl flex items-center justify-center mx-auto mb-8 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 shadow-xl`}>
+                    <IconComponent className="h-10 w-10 text-white" />
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4">{service.name}</h3>
-                  <p className="text-gray-600 mb-6">{service.description}</p>
-                  <div className="space-y-2">
+                  
+                  <h3 className="text-2xl font-bold text-gray-900 mb-6 group-hover:text-vibrant-blue transition-colors">
+                    {service.name}
+                  </h3>
+                  
+                  <p className="text-gray-600 mb-8 leading-relaxed">
+                    {service.description}
+                  </p>
+                  
+                  <div className="space-y-3">
                     {service.features.map((feature, idx) => (
-                      <div key={idx} className="flex items-center justify-center space-x-2">
-                        <CheckCircleIcon className="h-4 w-4 text-primary-600" />
-                        <span className="text-sm text-gray-600">{feature}</span>
+                      <div key={idx} className="flex items-center space-x-3 group-hover:translate-x-2 transition-transform duration-300" style={{ transitionDelay: `${idx * 50}ms` }}>
+                        <div className={`w-6 h-6 bg-gradient-to-r ${gradients[index % gradients.length]} rounded-full flex items-center justify-center flex-shrink-0`}>
+                          <CheckCircleIcon className="h-4 w-4 text-white" />
+                        </div>
+                        <span className="text-sm text-gray-700 font-medium">{feature}</span>
                       </div>
                     ))}
                   </div>
+                  
                   {service.id === 'data-solutions' && (
                     <button
                       onClick={() => setShowDataDetails(!showDataDetails)}
-                      className="mt-6 btn-primary text-sm"
+                      className={`mt-8 bg-gradient-to-r ${gradients[index % gradients.length]} text-white font-bold py-3 px-6 rounded-2xl hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl`}
                     >
-                      {showDataDetails ? 'Hide Details' : 'Learn More'}
+                      {showDataDetails ? 'Hide Details' : 'Explore Data Solutions'}
                     </button>
                   )}
                 </div>
