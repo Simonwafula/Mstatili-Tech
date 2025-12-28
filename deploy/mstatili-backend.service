@@ -1,0 +1,16 @@
+[Unit]
+Description=Mstatili Backend (Gunicorn + Uvicorn)
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/mstatili/backend
+EnvironmentFile=/etc/mstatili/env
+# Adjust the command if you use a virtualenv: ExecStart=/var/www/mstatili/venv/bin/gunicorn ...
+ExecStart=/usr/local/bin/gunicorn -k uvicorn.workers.UvicornWorker backend.server:app -b 127.0.0.1:8000 --workers 3 --log-level info
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

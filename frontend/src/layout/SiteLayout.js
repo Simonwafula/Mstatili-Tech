@@ -11,9 +11,9 @@ export default function SiteLayout() {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: siteContent.company.name,
-    description: siteContent.company.intro,
-    email: siteContent.company.contacts.email,
-    telephone: siteContent.company.contacts.phone,
+    description: siteContent.company.shortIntro,
+    email: siteContent.contact?.details?.emails?.[0],
+    telephone: siteContent.contact?.details?.phoneWhatsApp,
     address: {
       "@type": "PostalAddress",
       addressCountry: "KE",

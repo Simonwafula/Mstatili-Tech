@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import siteContent from "../content/siteContent";
@@ -12,20 +12,32 @@ function navLinkClass({ isActive }) {
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 10);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-neutral-200/60 shadow-soft">
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-150 ${
+      scrolled 
+        ? "bg-white border-b border-neutral-200 shadow-sm" 
+        : "bg-white/95"
+    }`}>
       <div className="container-custom">
-        <div className="flex items-center justify-between h-20">
-          <Link to="/" className="flex items-center focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-lg">
+        <div className="flex items-center justify-between h-16 md:h-18">
+          <Link to="/" className="flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 rounded">
             <img 
               src="/images/brand/mstatili-logo.png" 
               alt={`${siteContent.company.name} Logo`}
-              className="h-14 w-auto object-contain hover:opacity-90 transition-opacity duration-200"
+              className="h-10 md:h-12 w-auto object-contain object-left"
+              style={{ objectPosition: 'left center' }}
             />
           </Link>
 
-          <nav className="hidden md:flex items-center space-x-8" aria-label="Primary">
+          <nav className="hidden md:flex items-center gap-8" aria-label="Primary">
             {siteContent.nav.map((item) => (
               <NavLink key={item.href} to={item.href} className={navLinkClass} end={item.href === "/"}>
                 {item.label}
@@ -35,29 +47,32 @@ export default function Header() {
               to="/contact"
               className="btn-primary text-sm"
             >
-              Book a consultation
+              Get in touch
             </Link>
           </nav>
 
           <button
             type="button"
-            className="md:hidden p-2.5 rounded-xl bg-primary-50 hover:bg-primary-100 transition-colors"
-            aria-label="Open menu"
+            className="md:hidden p-2 rounded-lg border border-neutral-200 hover:bg-neutral-50 transition-colors duration-150"
+            aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
           >
-            {open ? <XMarkIcon className="h-6 w-6 text-primary-600" /> : <Bars3Icon className="h-6 w-6 text-primary-600" />}
+            {open ? <XMarkIcon className="h-5 w-5 text-neutral-700" /> : <Bars3Icon className="h-5 w-5 text-neutral-700" />}
           </button>
         </div>
 
-        {open ? (
-          <div className="md:hidden py-4 border-t border-neutral-200/60 bg-white">
-            <nav className="flex flex-col space-y-1">
+        {/* Mobile Menu */}
+        <div className={`md:hidden overflow-hidden transition-all duration-150 ease-out ${
+          open ? "max-h-80 opacity-100" : "max-h-0 opacity-0"
+        }`}>
+          <nav className="py-4 border-t border-neutral-200">
+            <div className="flex flex-col gap-1">
               {siteContent.nav.map((item) => (
                 <NavLink
                   key={item.href}
                   to={item.href}
-                  className="text-left text-neutral-600 hover:text-primary-600 transition-colors py-3 px-4 rounded-lg hover:bg-primary-50 font-medium"
+                  className="text-neutral-700 hover:text-neutral-900 hover:bg-neutral-50 transition-colors duration-150 py-2.5 px-3 rounded-lg font-medium text-sm"
                   end={item.href === "/"}
                   onClick={() => setOpen(false)}
                 >
@@ -67,13 +82,13 @@ export default function Header() {
               <Link
                 to="/contact"
                 onClick={() => setOpen(false)}
-                className="btn-primary mt-4 text-center mx-4"
+                className="btn-primary mt-3 text-center text-sm"
               >
-                Book a consultation
+                Get in touch
               </Link>
-            </nav>
-          </div>
-        ) : null}
+            </div>
+          </nav>
+        </div>
       </div>
     </header>
   );

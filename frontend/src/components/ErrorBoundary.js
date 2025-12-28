@@ -14,10 +14,10 @@ export default class ErrorBoundary extends React.Component {
   render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen bg-white flex items-center justify-center px-4">
+        <div className="min-h-screen bg-surface-50 flex items-center justify-center px-4">
           <div className="text-center">
-            <h1 className="text-2xl font-bold text-gray-900">Something went wrong.</h1>
-            <p className="mt-2 text-gray-600">
+            <h1 className="text-2xl font-display font-bold text-ink-900">Something went wrong.</h1>
+            <p className="mt-2 text-ink-600">
               Refresh the page. If the issue persists, contact us.
             </p>
             <a

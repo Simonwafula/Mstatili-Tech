@@ -1,4 +1,4 @@
-/* Mstatili Hybrid Modern Theme */
+/* Mstatili Professional Hybrid Neutral UI */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 @tailwind base;
@@ -7,25 +7,32 @@
 
 /* ========================================
    BASE LAYER - Typography & Foundations
+   Professional Hybrid Neutral UI Theme
    ======================================== */
 @layer base {
   :root {
-    /* Brand Colors */
-    --color-primary: #14b8a6;
-    --color-primary-dark: #0d9488;
-    --color-secondary: #f59e0b;
-    --color-ink: #262626;
+    /* Neutral-first palette */
+    --color-ink: #1a1a1a;
     --color-ink-light: #525252;
-    --color-surface: #fafaf9;
-    --color-surface-dark: #f5f5f4;
+    --color-ink-muted: #737373;
+    --color-surface: #ffffff;
+    --color-surface-alt: #fafafa;
+    --color-surface-muted: #f5f5f5;
+    --color-border: #e5e5e5;
+    --color-border-light: #f0f0f0;
     
-    /* Spacing scale */
+    /* Single restrained accent */
+    --color-accent: #0d9488;
+    --color-accent-hover: #0f766e;
+    --color-accent-light: #f0fdfa;
+    
+    /* Spacing */
     --space-section: 5rem;
     --space-component: 2rem;
     
-    /* Transitions */
+    /* Motion - minimal and purposeful */
     --transition-fast: 150ms;
-    --transition-base: 250ms;
+    --transition-base: 200ms;
     --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
   }
 
@@ -36,43 +43,45 @@
   }
   
   body {
-    @apply font-sans text-neutral-800 bg-surface-light;
-    line-height: 1.6;
+    @apply font-sans text-neutral-700 bg-white;
+    line-height: 1.65;
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
   }
   
-  /* Typography Hierarchy */
+  /* Typography - clear hierarchy */
   h1, h2, h3, h4, h5, h6 {
     @apply font-display text-neutral-900 font-semibold tracking-tight;
+    line-height: 1.2;
   }
 
   h1 {
-    @apply text-4xl md:text-5xl lg:text-6xl leading-tight;
-  }
-
-  h2 {
     @apply text-3xl md:text-4xl lg:text-5xl;
   }
 
+  h2 {
+    @apply text-2xl md:text-3xl lg:text-4xl;
+  }
+
   h3 {
-    @apply text-2xl md:text-3xl;
+    @apply text-xl md:text-2xl;
   }
 
   h4 {
-    @apply text-xl md:text-2xl;
+    @apply text-lg md:text-xl;
   }
 
   p {
     @apply text-neutral-600 leading-relaxed;
+    max-width: 65ch; /* Short line lengths for readability */
   }
 
   a {
-    @apply text-primary-600 hover:text-primary-700 transition-colors duration-200;
+    @apply text-teal-700 hover:text-teal-800 transition-colors duration-150;
   }
 
-  /* Focus states for accessibility */
+  /* High contrast focus states */
   *:focus-visible {
-    @apply outline-none ring-2 ring-primary-500 ring-offset-2 ring-offset-white;
+    @apply outline-none ring-2 ring-teal-600 ring-offset-2 ring-offset-white;
   }
 }
 
@@ -100,67 +109,68 @@
 
   /* ---- BUTTONS ---- */
   .btn {
-    @apply inline-flex items-center justify-center gap-2 font-medium rounded-xl 
-           transition-all duration-200 ease-out focus-visible:outline-none 
+    @apply inline-flex items-center justify-center gap-2 font-medium rounded-lg
+           transition-all duration-150 ease-out focus-visible:outline-none 
            focus-visible:ring-2 focus-visible:ring-offset-2;
   }
 
   .btn-primary {
-    @apply btn bg-primary-500 text-white px-6 py-3 
-           hover:bg-primary-600 hover:shadow-medium hover:-translate-y-0.5
-           focus-visible:ring-primary-500;
+    @apply btn bg-teal-700 text-white px-5 py-2.5
+           hover:bg-teal-800
+           active:bg-teal-900
+           focus-visible:ring-teal-600;
   }
 
   .btn-primary-lg {
-    @apply btn-primary px-8 py-4 text-lg;
+    @apply btn-primary px-6 py-3 text-base;
   }
 
   .btn-secondary {
-    @apply btn bg-transparent border-2 border-primary-500 text-primary-600 px-6 py-3
-           hover:bg-primary-50 hover:border-primary-600
-           focus-visible:ring-primary-500;
+    @apply btn bg-transparent border border-neutral-300 text-neutral-700 px-5 py-2.5
+           hover:bg-neutral-50 hover:border-neutral-400
+           active:bg-neutral-100
+           focus-visible:ring-neutral-400;
   }
 
   .btn-ghost {
-    @apply btn text-neutral-600 hover:text-primary-600 hover:bg-primary-50 px-4 py-2;
+    @apply btn text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 px-4 py-2
+           active:bg-neutral-200;
   }
 
-  .btn-amber {
-    @apply btn bg-secondary-500 text-white px-6 py-3
-           hover:bg-secondary-600 hover:shadow-medium hover:-translate-y-0.5
-           focus-visible:ring-secondary-500;
+  .btn-link {
+    @apply btn text-teal-700 hover:text-teal-800 px-0 py-0;
   }
 
   /* ---- CARDS ---- */
   .card {
-    @apply bg-white rounded-2xl shadow-card border border-neutral-200/60
-           transition-all duration-200 ease-out;
+    @apply bg-white rounded-xl border border-neutral-200
+           transition-all duration-150 ease-out;
   }
 
   .card-hover {
-    @apply card hover:shadow-card-hover hover:-translate-y-1;
+    @apply card hover:border-neutral-300 hover:shadow-sm;
   }
 
   .card-interactive {
-    @apply card-hover cursor-pointer hover:border-primary-200;
+    @apply card-hover cursor-pointer;
   }
 
   .card-featured {
-    @apply bg-white rounded-3xl shadow-medium border border-primary-100
-           transition-all duration-200;
+    @apply bg-white rounded-xl shadow-sm border border-neutral-200
+           transition-all duration-150;
   }
 
   /* ---- BADGES ---- */
   .badge {
-    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-medium;
+    @apply inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-xs font-medium uppercase tracking-wide;
   }
 
   .badge-primary {
-    @apply badge bg-primary-50 text-primary-700;
+    @apply badge bg-teal-50 text-teal-800;
   }
 
   .badge-secondary {
-    @apply badge bg-secondary-50 text-secondary-700;
+    @apply badge bg-neutral-100 text-neutral-700;
   }
 
   .badge-neutral {
@@ -169,10 +179,11 @@
 
   /* ---- FORM ELEMENTS ---- */
   .input {
-    @apply w-full px-4 py-3 rounded-xl border border-neutral-300 bg-white
-           text-neutral-800 placeholder:text-neutral-400
-           transition-all duration-200
-           focus:border-primary-500 focus:ring-2 focus:ring-primary-100 focus:outline-none;
+    @apply w-full px-4 py-3 rounded-lg border border-neutral-300 bg-white
+           text-neutral-900 placeholder:text-neutral-400
+           transition-all duration-150
+           focus:border-teal-600 focus:ring-2 focus:ring-teal-100 focus:outline-none;
+    min-height: 48px; /* Accessible touch target */
   }
 
   .input-error {
@@ -184,14 +195,14 @@
   }
 
   .select {
-    @apply input appearance-none bg-no-repeat bg-right pr-10;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23737373'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
-    background-size: 1.5rem;
+    @apply input appearance-none bg-no-repeat bg-right pr-10 cursor-pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23525252'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-size: 1.25rem;
     background-position: right 0.75rem center;
   }
 
   .label {
-    @apply block text-sm font-medium text-neutral-700 mb-1.5;
+    @apply block text-sm font-medium text-neutral-800 mb-1.5;
   }
 
   /* ---- SECTIONS ---- */
@@ -200,7 +211,7 @@
   }
 
   .section-eyebrow {
-    @apply text-primary-600 font-medium text-sm uppercase tracking-wider mb-3;
+    @apply text-neutral-500 font-medium text-xs uppercase tracking-wider mb-2;
   }
 
   .section-title {
@@ -208,22 +219,22 @@
   }
 
   .section-description {
-    @apply text-lg text-neutral-600 max-w-2xl mx-auto;
+    @apply text-base text-neutral-600 max-w-2xl mx-auto;
   }
 
   /* ---- NAVIGATION ---- */
   .nav-link {
-    @apply text-neutral-600 hover:text-primary-600 font-medium 
-           transition-colors duration-200 relative;
+    @apply text-neutral-600 hover:text-neutral-900 font-medium 
+           transition-colors duration-150 relative;
   }
 
   .nav-link-active {
-    @apply text-primary-600;
+    @apply text-neutral-900;
   }
 
   .nav-link::after {
-    @apply content-[''] absolute -bottom-1 left-0 w-0 h-0.5 bg-primary-500
-           transition-all duration-200;
+    @apply content-[''] absolute -bottom-0.5 left-0 w-0 h-0.5 bg-teal-600
+           transition-all duration-150;
   }
 
   .nav-link:hover::after,
@@ -231,30 +242,19 @@
     @apply w-full;
   }
 
-  /* ---- GRADIENTS & BACKGROUNDS ---- */
-  .gradient-text {
-    @apply bg-gradient-to-r from-primary-500 to-primary-700 bg-clip-text text-transparent;
+  /* ---- BACKGROUNDS ---- */
+  .bg-surface-alt {
+    @apply bg-neutral-50;
   }
 
-  .gradient-text-warm {
-    @apply bg-gradient-to-r from-primary-500 via-secondary-500 to-secondary-600 bg-clip-text text-transparent;
+  .bg-surface-muted {
+    @apply bg-neutral-100;
   }
 
-  .bg-surface-gradient {
-    background: linear-gradient(180deg, var(--color-surface) 0%, var(--color-surface-dark) 100%);
-  }
-
-  .bg-hero {
-    @apply bg-gradient-to-br from-neutral-900 via-neutral-800 to-primary-900;
-  }
-
-  .bg-pattern {
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2314b8a6' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-  }
-
+  /* Subtle pattern for long pages - very understated */
   .bg-dots {
-    background-image: radial-gradient(circle, rgba(20, 184, 166, 0.06) 1px, transparent 1px);
-    background-size: 24px 24px;
+    background-image: radial-gradient(circle, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+    background-size: 20px 20px;
   }
 
   /* ---- UTILITIES ---- */

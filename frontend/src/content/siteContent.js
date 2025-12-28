@@ -1,7 +1,7 @@
 // src/content/siteContent.js
 // Single source of truth for website copy + media + icon mapping.
 // Style direction: hybrid (selective photography + clean icons + subtle patterns).
-// NOTE: We intentionally avoid explicit "Kenya-only" wording; locality is expressed visually via imagery choices.
+// NOTE: We intentionally avoid explicit “country-only” wording; locality is expressed visually via imagery choices.
 
 export const siteContent = {
   // -----------------------------
@@ -18,7 +18,7 @@ VISUAL SYSTEM
 - Layout: clean grid, generous whitespace, strong typographic hierarchy.
 - Colors: deep neutral base (charcoal/ink), light surfaces (off-white), one primary accent (blue/teal), one secondary accent (amber/orange) used sparingly.
 - Use subtle geometric textures/patterns at very low opacity (2–6%) on section backgrounds.
-- Photography: authentic African professional scenes (teams at work, training, fieldwork with tablets, modern city/business contexts). Avoid stereotypes (no safari clichés unless relevant).
+- Photography: authentic professional scenes (teams at work, training, fieldwork with tablets, modern city/business contexts). Avoid stereotypes.
 - Icon style: outline icons (Heroicons/Lucide), consistent stroke weight.
 - Components: 2xl rounded corners, soft shadows, crisp borders, hover micro-interactions.
 
@@ -37,37 +37,41 @@ ACCESSIBILITY & PERFORMANCE
     `.trim(),
     implementationNotes: [
       "Use Tailwind; define typography scale and spacing tokens.",
-      "Use one hero image per page + supporting icon sets per section.",
+      "Use one hero image per page + supporting images sparingly.",
       "Use background patterns as SVG with low opacity.",
-      "Prefer real product visuals (dashboard mockups) over generic stock when possible.",
+      "Prefer real product visuals (dashboard mockups) over generic stock where possible.",
     ],
   },
 
   // -----------------------------
-  // ASSETS (images/patterns/logos)  
+  // ASSETS (images/patterns/logos)
   // -----------------------------
   assets: {
     images: {
       hero: {
-        home: "/images/hero/hybrid-hero-01.webp",
-        services: "/images/hero/services-01.webp",
-        caseStudies: "/images/hero/case-studies-01.webp",
-        insights: "/images/hero/insights-01.webp",
-        about: "/images/hero/about-01.webp",
-        contact: "/images/hero/contact-01.webp",
+        home: "/images/hero/hero-home.webp",
+        services: "/images/hero/hero-services.webp",
+        caseStudies: "/images/hero/hero-case-studies.webp",
+        insights: "/images/hero/hero-insights.webp",
+        about: "/images/hero/hero-about.webp",
+        contact: "/images/hero/hero-contact.webp",
       },
       sections: {
-        training: "/images/sections/training-01.webp",
-        fieldwork: "/images/sections/fieldwork-01.webp",
-        dashboard: "/images/sections/dashboard-01.webp",
-        workshop: "/images/sections/workshop-01.webp",
+        training: "/images/sections/section-training.webp",
+        fieldwork: "/images/sections/section-field-data.webp",
+        dashboard: "/images/sections/section-dashboard.webp",
+        workshop: "/images/sections/section-workshop.webp",
       },
       caseStudies: {
-        nextstepCover: "/images/case-studies/nextstepke-cover.webp",
-        nextstepShot1: "/images/case-studies/nextstepke-shot-01.webp",
-        nextstepShot2: "/images/case-studies/nextstepke-shot-02.webp",
-        frameworkCover: "/images/case-studies/performance-framework-cover.webp",
-        frameworkMock1: "/images/case-studies/performance-framework-mock-01.webp",
+        nextstepCover: "/images/case-studies/case-nextstepke-cover.webp",
+        nextstepShot1: "/images/case-studies/case-nextstepke-shot-01.webp",
+        nextstepShot2: "/images/case-studies/case-nextstepke-shot-02.webp",
+        frameworkCover: "/images/case-studies/case-performance-framework-cover.webp",
+        frameworkMock1: "/images/case-studies/case-performance-framework-mock-01.webp",
+      },
+      backgrounds: {
+        abstract1: "/images/backgrounds/bg-abstract-data-01.webp",
+        abstract2: "/images/backgrounds/bg-abstract-data-02.webp",
       },
       og: {
         default: "/images/og/og-default.webp",
@@ -77,23 +81,28 @@ ACCESSIBILITY & PERFORMANCE
       },
     },
     patterns: {
-      subtleGrid: "/images/patterns/subtle-grid.svg",
-      geoLines: "/images/patterns/geo-lines.svg",
-      dotMatrix: "/images/patterns/dot-matrix.svg",
+      grid: "/images/patterns/pattern-grid.svg",
+      geoLines: "/images/patterns/pattern-geo-lines.svg",
+      dotMatrix: "/images/patterns/pattern-dot-matrix.svg",
     },
     brand: {
-      logo: "/images/brand/mstatili-logo.png",
-      logoMark: "/images/brand/mstatili-mark.svg",
-      logoFull: "/images/brand/mstatili-full.svg",
+      logoMark: "/images/brand/logo-mark.svg",
+      logoFull: "/images/brand/logo-full.svg",
     },
   },
 
+  // -----------------------------
+  // ICON KEYS (map to your icon library in UI layer)
+  // -----------------------------
   icons: {
+    // Global / UI
     primaryCTA: "CalendarCheck",
     secondaryCTA: "ArrowRight",
     phone: "Phone",
     email: "Mail",
     location: "MapPin",
+
+    // Capabilities
     tech: "LaptopCode",
     dataStrategy: "Network",
     dashboards: "LayoutDashboard",
@@ -102,29 +111,59 @@ ACCESSIBILITY & PERFORMANCE
     research: "FlaskConical",
     training: "GraduationCap",
     digitalStrategy: "Megaphone",
+
+    // Trust / quality
     quality: "BadgeCheck",
     evidence: "BarChart3",
     sustainability: "LifeBuoy",
     delivery: "Wrench",
   },
 
+  // -----------------------------
+  // COMPANY (corrected: multidisciplinary + not “statistician-led”)
+  // -----------------------------
   company: {
     name: "Mstatili Technologies",
     tagline: "Tech & Data Solutions for Decision-Making",
+
+    // Tighter, clearer, “advisor + builder + expert” positioning
     positioningStatement:
-      "We help SMEs, NGOs, and researchers strengthen decision-making using reliable data, well-designed tools, and practical digital systems—dashboards, automation, analytics, and software solutions that teams can sustain.",
+      "We help Institutions,SMEs, NGOs, and researchers make better decisions by strengthening data quality, building decision-ready tools, and delivering practical digital systems—dashboards, automation pipelines, analytics, and software applications that teams can sustain.",
+
+    // Depth + balance (tech + data + adoption)
     shortIntro:
-      "Mstatili Technologies is a multidisciplinary consulting and solutions firm. Our leadership combines computer science, statistics, data science, education, and marketing/content expertise. We deliver end-to-end support—from data strategy and governance to dashboards, automation pipelines, research support, and software applications—so organizations can move from fragmented information to timely, trusted, accessible insights.",
+      "Mstatili Technologies is a multidisciplinary consulting and solutions firm. We bring together computer science, data science, statistics, education expertise, and marketing/content capability to deliver end-to-end outcomes: clearer indicators, cleaner data, better tools, and workflows that turn information into action. We advise, design, and build—so organizations move from fragmented reporting to timely, trusted, accessible insight.",
+
     whatWeDoInOneLine:
       "We design the metrics, improve the data, build the tools, and automate the workflow—so insight becomes action.",
+
+    whoWeServe: [
+      "SMEs and private enterprises",
+      "NGOs and donor-funded programs",
+      "Researchers and academic projects",
+      "Operations and service-delivery teams",
+      "Planning, finance, and performance management functions",
+    ],
+
+    workingStyle: [
+      "Expert + hybrid: advisory, implementation, and technical delivery",
+      "Practical and decision-oriented: built around real review cycles",
+      "Sustainable: documentation, handover, and training included",
+      "Quality-driven: validation and reconciliation are built in",
+    ],
+
     focusAreas: [
-      "Technology infrastructure & software development (web and apps)",
-      "Data strategy, governance, processing & validation",
-      "Analytics, forecasting & research support",
-      "Dashboards, reporting & decision support systems",
-      "Automation, optimization & data pipelines",
-      "Training and capacity building",
-      "Digital strategy (brand, content, UI/UX, SEO) for growth and adoption",
+      "Tech solutions (web, apps, internal tools, integrations)",
+      "Data strategy and governance (KPIs, ownership, schedules, rules)",
+      "Dashboards and reporting (executive + operational views)",
+      "M&E frameworks and performance analytics (scorecards, indicators)",
+      "Data cleaning, validation, and reconciliation (trust in numbers)",
+      "Automation and data pipelines (repeatable reporting workflows)",
+      "Forecasting and scenario analysis (planning and prioritization)",
+      "Surveys and digital data collection (tools and workflows)",
+      "Training and capacity building (skills transfer and playbooks)",
+      "Research support (study design, analysis, and reporting)",
+      "Digital strategy (brand, content, UI/UX, SEO) for adoption and growth",
     ],
   },
 
@@ -143,7 +182,7 @@ ACCESSIBILITY & PERFORMANCE
     credibilityBadges: [
       { label: "Multidisciplinary team", icon: "Users" },
       { label: "Evidence-driven delivery", icon: "BarChart3" },
-      { label: "Implementation + advisory", icon: "Wrench" },
+      { label: "Advisor + builder", icon: "Wrench" },
       { label: "Quality checks built-in", icon: "BadgeCheck" },
       { label: "Documentation + training", icon: "GraduationCap" },
     ],
@@ -152,28 +191,41 @@ ACCESSIBILITY & PERFORMANCE
   global: {
     outcomesWeDeliver: [
       "Timely reporting with fewer manual steps",
-      "Reliable numbers through validation and reconciliation checks",
+      "Reliable figures through validation and reconciliation checks",
       "Dashboards that support management decisions and follow-ups",
       "Automated workflows that reduce repeat work and errors",
-      "Clear indicators and definitions that teams interpret consistently",
+      "Clear indicators and definitions teams interpret consistently",
       "Tools, documentation, and training to sustain delivery internally",
     ],
-    sectorsWeSupport: [
-      "SMEs and private enterprises",
-      "NGOs and donor-funded programs",
-      "Research and academic projects",
-      "Operations and service-delivery teams",
-      "Planning, finance, and performance management functions",
-    ],
     credibilityStrip: [
-      { label: "Approach", value: "Decision-oriented", icon: "Target",
-        detail: "We start from the decision to be improved, then design indicators, workflows, and tools that make that decision easier and faster." },
-      { label: "Quality", value: "Consistency first", icon: "BadgeCheck",
-        detail: "Validation and reconciliation checks protect consistency across linked reports and outputs." },
-      { label: "Delivery", value: "Advisory + implementation", icon: "Wrench",
-        detail: "We don't stop at recommendations. We build dashboards, pipelines, templates, and systems that operationalize results." },
-      { label: "Sustainability", value: "Transfer + capacity", icon: "GraduationCap",
-        detail: "Documentation, training, and handover are part of delivery—so internal teams can maintain and evolve the solution." },
+      {
+        label: "Approach",
+        value: "Decision-oriented",
+        icon: "Target",
+        detail:
+          "We begin with the decision to improve, then define indicators, workflows, and tools that make that decision easier and faster.",
+      },
+      {
+        label: "Quality",
+        value: "Consistency first",
+        icon: "BadgeCheck",
+        detail:
+          "Validation and reconciliation checks protect consistency across linked reports, tables, and dashboards.",
+      },
+      {
+        label: "Delivery",
+        value: "Advisory + implementation",
+        icon: "Wrench",
+        detail:
+          "We don’t stop at recommendations. We build dashboards, pipelines, templates, and systems that operationalize results.",
+      },
+      {
+        label: "Sustainability",
+        value: "Transfer + capacity",
+        icon: "GraduationCap",
+        detail:
+          "Documentation, training, and handover are part of delivery—so internal teams can maintain and evolve the solution.",
+      },
     ],
   },
 
@@ -189,9 +241,9 @@ ACCESSIBILITY & PERFORMANCE
     },
 
     hero: {
-      headline: "Turn data into decisions—using tools your team can actually run.",
+      headline: "Turn data into decisions—with tools your team can sustain.",
       subheadline:
-        "We help SMEs, NGOs, and researchers move from fragmented information to timely, reliable, accessible insights—through dashboards, automation pipelines, analytics, research support, and software solutions.",
+        "We help SMEs, NGOs, and researchers move from fragmented information to timely, reliable, accessible insight—through dashboards, automation pipelines, analytics, research support, and software solutions.",
       supportingPoints: [
         { icon: "Network", text: "Define KPIs and indicators, then build reporting systems around them" },
         { icon: "BadgeCheck", text: "Clean, validate, and reconcile data to improve trust in numbers" },
@@ -199,24 +251,24 @@ ACCESSIBILITY & PERFORMANCE
       ],
       media: {
         type: "image",
-        src: "/images/hero/hybrid-hero-01.webp",
+        src: "/images/hero/hero-home.webp",
         alt: "A modern team collaborating on technology and data solutions",
-        overlay: { type: "gradient", pattern: "/images/patterns/geo-lines.svg" },
+        overlay: { type: "gradient", pattern: "/images/patterns/pattern-geo-lines.svg" },
       },
       ctas: {
         primary: { label: "Book a consultation", href: "/contact", icon: "CalendarCheck" },
         secondary: { label: "Explore services", href: "/services", icon: "ArrowRight" },
       },
       trustLine:
-        "A multidisciplinary team combining technology, data science, statistics, education, and content strategy—delivering both strategy and implementation.",
+        "A multidisciplinary team combining technology, data science, statistics, education expertise, and content strategy—delivering both strategy and implementation.",
     },
 
     intro: {
       title: "Consulting and solutions delivery—end to end",
       icon: "Sparkles",
       paragraphs: [
-        "Many organizations have data but lack the structure and tools to use it with confidence. Reporting becomes slow, totals don't reconcile, and decisions rely on incomplete or inconsistent information.",
-        "We bridge the gap between business needs and technology. We design indicator frameworks, improve data quality, build dashboards and reporting systems, and automate pipelines so insights are timely and usable.",
+        "Many organizations have data but lack the structure and tools to use it with confidence. Reporting becomes slow, totals don’t reconcile, and decisions rely on incomplete or inconsistent information.",
+        "We bridge the gap between business needs and technology. We define indicators, improve data quality, build dashboards and reporting systems, and automate pipelines so insights are timely and usable.",
         "Where needed, we go further—developing web and mobile applications that operationalize workflows, improve access to information, and support decision-making at scale.",
       ],
     },
@@ -230,25 +282,21 @@ ACCESSIBILITY & PERFORMANCE
           title: "Tech Solutions (Web & Apps)",
           icon: "LaptopCode",
           desc:
-            "Build and improve digital systems that support operations and access to information—web platforms, mobile apps, and custom tools.",
-          bullets: [
-            "Web development and maintenance",
-            "Custom internal tools and portals",
-            "Workflow systems and integrations",
-          ],
-          media: { type: "image", src: "/images/sections/workshop-01.webp", alt: "Product design workshop in progress" },
+            "Build and improve digital systems that support operations and access to information—web platforms, mobile apps, and internal tools.",
+          bullets: ["Web platforms and portals", "Custom tools and integrations", "Product UX improvements"],
+          media: {
+            type: "image",
+            src: "/images/sections/section-workshop.webp",
+            alt: "Product design workshop in progress",
+          },
           href: "/services/tech-solutions",
         },
         {
           title: "Data Strategy & Governance",
           icon: "Network",
           desc:
-            "Align objectives, define KPIs, and establish data rules so reporting becomes consistent and trusted across teams.",
-          bullets: [
-            "Indicator/KPI definition and documentation",
-            "Data source mapping and ownership",
-            "Validation rules and reconciliation points",
-          ],
+            "Align objectives, define KPIs, and establish practical data rules so reporting becomes consistent and trusted across teams.",
+          bullets: ["Indicator/KPI definition", "Data ownership and schedules", "Validation and reconciliation points"],
           href: "/services/data-strategy-governance",
         },
         {
@@ -256,12 +304,12 @@ ACCESSIBILITY & PERFORMANCE
           icon: "LayoutDashboard",
           desc:
             "Decision-ready dashboards and reporting packs that answer real management questions—updated on schedule.",
-          bullets: [
-            "Dashboard design and data modeling",
-            "Standardized reporting templates",
-            "Refresh and distribution plans",
-          ],
-          media: { type: "image", src: "/images/sections/dashboard-01.webp", alt: "Dashboard and analytics visualization" },
+          bullets: ["Dashboard design and modeling", "Standardized reporting packs", "Refresh and distribution plans"],
+          media: {
+            type: "image",
+            src: "/images/sections/section-dashboard.webp",
+            alt: "Dashboard and analytics visualization",
+          },
           href: "/services/dashboards-reporting",
         },
         {
@@ -269,11 +317,7 @@ ACCESSIBILITY & PERFORMANCE
           icon: "ClipboardCheck",
           desc:
             "Results frameworks, scorecards, and review cycles that turn activity data into accountability and learning.",
-          bullets: [
-            "Indicator frameworks and targets",
-            "Scorecards and review packs",
-            "Outcome tracking and analysis",
-          ],
+          bullets: ["Indicator frameworks and targets", "Scorecards and review packs", "Outcome tracking and analysis"],
           href: "/services/monitoring-evaluation",
         },
         {
@@ -281,37 +325,33 @@ ACCESSIBILITY & PERFORMANCE
           icon: "Workflow",
           desc:
             "Fix messy data and automate reporting workflows so outputs are repeatable, faster, and less error-prone.",
-          bullets: [
-            "Data processing and validation",
-            "Reconciliation checks for linked outputs",
-            "Automation pipelines and scheduled jobs",
-          ],
-          media: { type: "image", src: "/images/sections/fieldwork-01.webp", alt: "Field data collection using digital tools" },
+          bullets: ["Data cleaning and validation", "Reconciliation for linked outputs", "Automation pipelines and jobs"],
+          media: {
+            type: "image",
+            src: "/images/sections/section-field-data.webp",
+            alt: "Digital data collection using a tablet",
+          },
           href: "/services/data-automation",
         },
         {
           title: "Research, Forecasting & Capacity Building",
           icon: "FlaskConical",
           desc:
-            "Rigorous research support and analytics for planning and reporting, plus training so teams can sustain results.",
-          bullets: [
-            "Research design, analysis, and reporting",
-            "Forecasting and scenario analysis",
-            "Training, playbooks, and mentorship",
-          ],
-          media: { type: "image", src: "/images/sections/training-01.webp", alt: "Professional training session" },
+            "Rigorous research support and planning analytics, plus training so teams can sustain capability.",
+          bullets: ["Study design and analysis", "Forecasting and scenarios", "Training and playbooks"],
+          media: {
+            type: "image",
+            src: "/images/sections/section-training.webp",
+            alt: "Professional training session",
+          },
           href: "/services/research-analytics",
         },
         {
           title: "Digital Strategy (Brand, Content, UI/UX, SEO)",
           icon: "Megaphone",
           desc:
-            "Strengthen visibility and adoption through structured digital strategy—brand, content, UX, and search performance.",
-          bullets: [
-            "Messaging and content strategy",
-            "UI/UX design for usability and conversion",
-            "SEO foundations for discoverability",
-          ],
+            "Strengthen visibility and adoption through structured digital strategy—messaging, content, UX, and search performance.",
+          bullets: ["Messaging and content strategy", "UI/UX for clarity and conversion", "SEO foundations"],
           href: "/services/digital-strategy",
         },
       ],
@@ -322,27 +362,43 @@ ACCESSIBILITY & PERFORMANCE
       description:
         "A disciplined approach that reduces delivery risk, improves quality early, and ensures solutions are usable and sustainable.",
       steps: [
-        { title: "Discovery", icon: "Search",
-          detail: "Clarify the decision, users, and context. Agree on scope, deliverables, timelines, and success criteria." },
-        { title: "Design", icon: "PencilRuler",
-          detail: "Define indicators, workflows, validation rules, and the reporting/product architecture. For software, define user journeys and requirements." },
-        { title: "Build & Validate", icon: "Wrench",
-          detail: "Implement dashboards, pipelines, analytics, or product features. Validate outputs with reconciliation checks and stakeholder review." },
-        { title: "Transfer & Support", icon: "GraduationCap",
-          detail: "Deliver documentation, training, and handover. Optional retainer support for continuous improvement and review cycles." },
+        {
+          title: "Discovery",
+          icon: "Search",
+          detail:
+            "Clarify the decision, users, context, and constraints. Agree on scope, deliverables, timeline, and success criteria.",
+        },
+        {
+          title: "Design",
+          icon: "PencilRuler",
+          detail:
+            "Define indicators, workflows, validation rules, and architecture. For software, define user journeys and requirements.",
+        },
+        {
+          title: "Build & Validate",
+          icon: "Wrench",
+          detail:
+            "Implement dashboards, pipelines, analytics, or product features. Validate outputs using reconciliation checks and stakeholder review.",
+        },
+        {
+          title: "Transfer & Support",
+          icon: "GraduationCap",
+          detail:
+            "Deliver documentation, training, and handover. Optional retainer support for continuous improvement and review cycles.",
+        },
       ],
     },
 
     finalCTA: {
       title: "Ready to strengthen decision-making in your organization?",
       description:
-        "Share your context—data sources, reporting cycle, and the decisions you need to improve. We'll propose a practical plan, timeline, and deliverables.",
+        "Share your context—data sources, reporting cycle, and the decisions you need to improve. We’ll propose a practical plan, timeline, and deliverables.",
       cta: { label: "Book a consultation", href: "/contact", icon: "CalendarCheck" },
     },
   },
 
   // -----------------------------
-  // SERVICES
+  // SERVICES (fix media paths + make content align to your earlier service list)
   // -----------------------------
   services: {
     seo: {
@@ -358,9 +414,9 @@ ACCESSIBILITY & PERFORMANCE
         "We combine advisory and implementation to deliver usable systems—dashboards, automation, analytics, software tools, and capability building.",
       media: {
         type: "image",
-        src: "/images/hero/services-01.webp",
+        src: "/images/hero/hero-services.webp",
         alt: "A modern consulting team planning delivery and outcomes",
-        overlay: { type: "gradient", pattern: "/images/patterns/subtle-grid.svg" },
+        overlay: { type: "gradient", pattern: "/images/patterns/pattern-grid.svg" },
       },
     },
 
@@ -374,27 +430,40 @@ ACCESSIBILITY & PERFORMANCE
     engagementModels: {
       title: "Engagement models",
       items: [
-        { title: "Project-based delivery", icon: "ClipboardList",
-          detail: "Defined scope and timeline—ideal for dashboards, automation pipelines, software features, M&E frameworks, or research analysis and reporting." },
-        { title: "Advisory / retainer", icon: "Handshake",
-          detail: "Ongoing support for analytics, reporting design, data quality reviews, product improvement, and performance review cycles." },
-        { title: "Capacity building", icon: "GraduationCap",
-          detail: "Workshops plus coached implementation using your real datasets and tools—ideal for teams strengthening internal capability." },
+        {
+          title: "Project-based delivery",
+          icon: "ClipboardList",
+          detail:
+            "Defined scope and timeline—ideal for dashboards, automation pipelines, software builds, M&E frameworks, or research analysis and reporting.",
+        },
+        {
+          title: "Advisory / retainer",
+          icon: "Handshake",
+          detail:
+            "Ongoing support for analytics, reporting design, data quality reviews, product improvement, and performance review cycles.",
+        },
+        {
+          title: "Capacity building",
+          icon: "GraduationCap",
+          detail:
+            "Workshops plus coached implementation using your real datasets and tools—ideal for teams strengthening internal capability.",
+        },
       ],
     },
 
     items: [
+      // 1) Tech Solutions
       {
         slug: "tech-solutions",
         title: "Tech Solutions (Web & Apps)",
         icon: "LaptopCode",
         oneLiner:
           "Digital systems that operationalize workflows—web platforms, apps, and tools built for usability and sustainability.",
-        media: { type: "image", src: "/images/sections/workshop-01.webp", alt: "Product and systems design workshop" },
+        media: { type: "image", src: "/images/sections/section-workshop.webp", alt: "Product and systems design workshop" },
         whoItsFor: [
           "SMEs needing operational tools and customer-facing platforms",
           "NGOs requiring portals, internal systems, or data collection tools",
-          "Research teams needing structured digital workflows for data capture and access",
+          "Research teams needing structured digital workflows for capture and access",
         ],
         problemsWeSolve: [
           "Manual workflows that should be digitized",
@@ -404,9 +473,9 @@ ACCESSIBILITY & PERFORMANCE
         typicalDeliverables: [
           "Web platform or application (feature-defined MVP to iterative build)",
           "Mobile application (as required by use case)",
-          "Systems integration (where feasible) and workflow automation hooks",
+          "Integrations and workflow automation hooks (where feasible)",
           "UI/UX improvements focused on usability and conversion",
-          "Documentation and maintenance guidance",
+          "Documentation, maintenance guidance, and handover",
         ],
         approach: [
           "Define workflow and user journey (requirements + success metrics)",
@@ -421,13 +490,14 @@ ACCESSIBILITY & PERFORMANCE
         ],
       },
 
+      // 2) Data Strategy & Governance
       {
         slug: "data-strategy-governance",
         title: "Data Strategy & Governance",
         icon: "Network",
         oneLiner:
           "Clear KPIs, defined data sources, and practical rules that make reporting consistent and trusted across teams.",
-        media: { type: "pattern", src: "/images/patterns/geo-lines.svg", alt: "Geometric pattern background" },
+        media: { type: "pattern", src: "/images/patterns/pattern-geo-lines.svg", alt: "Geometric pattern background" },
         whoItsFor: [
           "SMEs scaling operations and needing consistent reporting",
           "NGOs tracking results across multiple teams or locations",
@@ -443,7 +513,7 @@ ACCESSIBILITY & PERFORMANCE
           "Data flow map (sources → transformations → outputs)",
           "Data processing and validation rules (quality checks)",
           "Reporting calendar and roles/responsibilities",
-          "Governance recommendations that fit your operating reality",
+          "Governance recommendations that fit operating reality",
         ],
         approach: [
           "Clarify decisions and audiences for reporting",
@@ -458,13 +528,14 @@ ACCESSIBILITY & PERFORMANCE
         ],
       },
 
+      // 3) Dashboards & Reporting
       {
         slug: "dashboards-reporting",
         title: "Dashboards & Reporting",
         icon: "LayoutDashboard",
         oneLiner:
           "Decision-ready dashboards and reporting packs—designed for real meetings, real users, and reliable totals.",
-        media: { type: "image", src: "/images/sections/dashboard-01.webp", alt: "Analytics dashboard visualization" },
+        media: { type: "image", src: "/images/sections/section-dashboard.webp", alt: "Analytics dashboard visualization" },
         whoItsFor: [
           "Managers and leaders needing fast clarity",
           "Operations teams tracking follow-ups and delivery",
@@ -472,7 +543,7 @@ ACCESSIBILITY & PERFORMANCE
         ],
         problemsWeSolve: [
           "Reports that take too long to prepare and are hard to interpret",
-          "Dashboards that look good but don't match decision workflows",
+          "Dashboards that look good but don’t match decision workflows",
           "Inconsistent figures across linked reports and tables",
         ],
         typicalDeliverables: [
@@ -495,17 +566,18 @@ ACCESSIBILITY & PERFORMANCE
         ],
       },
 
+      // 4) M&E frameworks / indicators
       {
         slug: "monitoring-evaluation",
-        title: "Monitoring, Evaluation & Performance Analytics",
+        title: "M&E Frameworks, Indicators & Performance Analytics",
         icon: "ClipboardCheck",
         oneLiner:
-          "M&E frameworks, indicators, and scorecards that connect activities to outcomes and learning.",
-        media: { type: "pattern", src: "/images/patterns/dot-matrix.svg", alt: "Dot matrix background pattern" },
+          "Results frameworks and scorecards that connect activities to outcomes—built for consistent review cycles.",
+        media: { type: "pattern", src: "/images/patterns/pattern-dot-matrix.svg", alt: "Dot matrix background pattern" },
         whoItsFor: [
-          "NGOs and programs tracking results and reporting to stakeholders",
-          "SMEs implementing performance tracking",
-          "Research projects needing structured indicator tracking",
+          "NGOs and programs reporting to stakeholders",
+          "Teams implementing performance tracking and review cycles",
+          "Projects requiring structured indicator definitions and targets",
         ],
         problemsWeSolve: [
           "Indicators that are not measurable or not aligned to objectives",
@@ -531,13 +603,14 @@ ACCESSIBILITY & PERFORMANCE
         ],
       },
 
+      // 5) Data cleaning & reconciliation + automation & data pipelines
       {
         slug: "data-automation",
-        title: "Data Cleaning, Validation & Automation",
+        title: "Data Cleaning, Reconciliation & Automation",
         icon: "Workflow",
         oneLiner:
-          "Fix messy data and automate workflows so reporting is repeatable, auditable, and on time.",
-        media: { type: "image", src: "/images/sections/fieldwork-01.webp", alt: "Digital data collection in the field" },
+          "Fix messy data and automate workflows so reporting becomes repeatable, auditable, and on time.",
+        media: { type: "image", src: "/images/sections/section-field-data.webp", alt: "Digital data collection in the field" },
         whoItsFor: [
           "Teams struggling with duplicates, missing values, and conflicting datasets",
           "Organizations spending too much time preparing reports manually",
@@ -564,24 +637,25 @@ ACCESSIBILITY & PERFORMANCE
         successLooksLike: [
           "Less time cleaning data every cycle",
           "More consistent outputs and fewer disputes",
-          "Reporting that becomes repeatable and reliable",
+          "Reporting that becomes reliable and repeatable",
         ],
       },
 
+      // 6) Forecasting & scenario analysis + research support + surveys + training
       {
         slug: "research-analytics",
         title: "Research Support, Forecasting & Capacity Building",
         icon: "FlaskConical",
         oneLiner:
-          "Rigorous research and analytics for planning and reporting—plus training so teams can sustain capability.",
-        media: { type: "image", src: "/images/sections/training-01.webp", alt: "Training and capacity building session" },
+          "Rigorous research and planning analytics—plus training so teams can interpret, maintain, and extend the work.",
+        media: { type: "image", src: "/images/sections/section-training.webp", alt: "Training and capacity building session" },
         whoItsFor: [
           "Researchers needing study design, analysis, and reporting support",
           "Organizations planning targets, budgets, and resource allocation",
           "Teams building internal analytics capacity",
         ],
         problemsWeSolve: [
-          "Research designs that don't align with available data",
+          "Research designs that don’t align with available data",
           "Analysis that is hard to communicate to stakeholders",
           "Planning without defensible assumptions and scenarios",
           "Over-reliance on one person for analytics work",
@@ -590,7 +664,7 @@ ACCESSIBILITY & PERFORMANCE
           "Research design support (objectives, questions, methodology)",
           "Statistical analysis and reporting (clear assumptions and methods)",
           "Forecasting models and scenario analysis",
-          "Survey design and data collection workflows",
+          "Survey design and digital data collection workflows",
           "Training sessions, templates, and practical playbooks",
         ],
         approach: [
@@ -607,28 +681,29 @@ ACCESSIBILITY & PERFORMANCE
         ],
       },
 
+      // 7) Digital strategy (from archived consulting intent) + adoption
       {
         slug: "digital-strategy",
         title: "Digital Strategy (Brand, Content, UI/UX, SEO)",
         icon: "Megaphone",
         oneLiner:
           "Digital strategy that improves visibility, usability, and conversion—grounded in clear messaging and measurable goals.",
-        media: { type: "pattern", src: "/images/patterns/subtle-grid.svg", alt: "Subtle grid pattern background" },
+        media: { type: "pattern", src: "/images/patterns/pattern-grid.svg", alt: "Subtle grid pattern background" },
         whoItsFor: [
           "SMEs improving online presence and lead generation",
           "Programs needing clear communication and user-friendly platforms",
           "Teams wanting better UX and content structure for adoption",
         ],
         problemsWeSolve: [
-          "Weak positioning and inconsistent brand messaging",
-          "Sites that look fine but don't convert or communicate value",
+          "Weak positioning and inconsistent messaging",
+          "Sites that look fine but don’t convert or communicate value",
           "Poor discoverability due to missing SEO fundamentals",
         ],
         typicalDeliverables: [
-          "Brand and messaging direction (value proposition, tone, structure)",
-          "Content strategy and page copy guidance",
+          "Positioning and messaging direction (value proposition, tone, structure)",
+          "Content structure and page copy guidance",
           "UI/UX improvements and web design support",
-          "SEO foundations (structure, on-page best practices)",
+          "SEO foundations (site structure + on-page best practices)",
         ],
         approach: [
           "Clarify goals and target audience",
@@ -647,13 +722,13 @@ ACCESSIBILITY & PERFORMANCE
     cta: {
       title: "Not sure which service fits?",
       description:
-        "Share your context and what decision you want to improve. We'll recommend a practical approach and outline likely deliverables.",
+        "Share your context and what decision you want to improve. We’ll recommend a practical approach and outline likely deliverables.",
       button: { label: "Book a consultation", href: "/contact", icon: "CalendarCheck" },
     },
   },
 
   // -----------------------------
-  // CASE STUDIES
+  // CASE STUDIES (fix hero image path + tighten language)
   // -----------------------------
   caseStudies: {
     seo: {
@@ -666,18 +741,18 @@ ACCESSIBILITY & PERFORMANCE
     hero: {
       title: "Case studies",
       subtitle:
-        "Examples of decision-oriented delivery—practical tools, reliable data workflows, and outcomes that reduce friction for teams.",
+        "Examples of decision-oriented delivery—practical tools, reliable workflows, and outcomes that reduce friction for teams.",
       media: {
         type: "image",
-        src: "/images/hero/case-studies-01.webp",
-        alt: "Professional project review meeting",
-        overlay: { type: "gradient", pattern: "/images/patterns/geo-lines.svg" },
+        src: "/images/hero/hero-case-studies.webp",
+        alt: "Project review and results evaluation",
+        overlay: { type: "gradient", pattern: "/images/patterns/pattern-geo-lines.svg" },
       },
     },
 
     intro: {
       paragraphs: [
-        "These examples illustrate the type of work we deliver: decision-oriented analytics, practical tools, and workflows that reduce friction for teams.",
+        "These examples illustrate how we deliver: decision-oriented analytics, practical tools, and workflows that reduce friction and improve trust in outputs.",
         "Client names are not listed to respect confidentiality. Each case focuses on the problem, approach, deliverables, and outcomes.",
       ],
     },
@@ -688,10 +763,10 @@ ACCESSIBILITY & PERFORMANCE
         category: "Tech Solutions",
         title: "NextstepKE — Career Decision Support Ecosystem",
         icon: "LaptopCode",
-        cover: { src: "/images/case-studies/nextstepke-cover.webp", alt: "NextstepKE cover visual" },
+        cover: { src: "/images/case-studies/case-nextstepke-cover.webp", alt: "NextstepKE case cover (abstract)" },
         gallery: [
-          { src: "/images/case-studies/nextstepke-shot-01.webp", alt: "NextstepKE product screen (illustrative)" },
-          { src: "/images/case-studies/nextstepke-shot-02.webp", alt: "NextstepKE insights view (illustrative)" },
+          { src: "/images/case-studies/case-nextstepke-shot-01.webp", alt: "Illustrative product UI mockup" },
+          { src: "/images/case-studies/case-nextstepke-shot-02.webp", alt: "Illustrative insights dashboard mockup" },
         ],
         summary:
           "Designed and built an ecosystem that collects and structures fragmented career information, then delivers it through an application to support better career and job-search decisions.",
@@ -704,18 +779,18 @@ ACCESSIBILITY & PERFORMANCE
         ],
         approach: [
           "Designed a collection and processing ecosystem",
-          "Implemented automation to structure and update data",
+          "Implemented automation to structure and refresh data",
           "Built an application layer that makes insights accessible and actionable",
         ],
         deliverables: [
           "End-to-end data collection and processing workflow",
-          "Structured data outputs and update routines",
+          "Structured outputs and update routines",
           "Decision-support application for guidance",
         ],
         outcomes: [
           "Simplified access to relevant information",
-          "Improved decision-making support during job search",
-          "Demonstrated practical impact of combining data engineering with product delivery",
+          "Improved decision support during job search and planning",
+          "Demonstrated impact of combining data engineering with product delivery",
         ],
         timeline: "Iterative build (prototype to working product)",
       },
@@ -723,19 +798,19 @@ ACCESSIBILITY & PERFORMANCE
       {
         slug: "performance-reporting-framework",
         category: "M&E",
-        title: "Performance & Reporting Framework for an Organization",
+        title: "Performance & Reporting Framework",
         icon: "ClipboardCheck",
         cover: {
-          src: "/images/case-studies/performance-framework-cover.webp",
-          alt: "Performance framework cover visual",
+          src: "/images/case-studies/case-performance-framework-cover.webp",
+          alt: "Performance framework cover (abstract)",
         },
         gallery: [
-          { src: "/images/case-studies/performance-framework-mock-01.webp", alt: "Illustrative scorecard/dashboard mock" },
+          { src: "/images/case-studies/case-performance-framework-mock-01.webp", alt: "Illustrative scorecard/dashboard mock" },
         ],
         summary:
           "Defined indicators, reconciled datasets, and built reporting templates and dashboards to improve consistency, trust, and reporting speed.",
         context:
-          "Performance reporting was slow and inconsistent due to unclear indicators and manual processes.",
+          "Reporting was slow and inconsistent due to unclear indicators, manual compilation, and repeated data quality issues.",
         problem: [
           "Indicators interpreted differently across teams",
           "Manual workflows caused delays and errors",
@@ -745,7 +820,7 @@ ACCESSIBILITY & PERFORMANCE
           "Clarified indicators and aligned them to objectives",
           "Cleaned and reconciled datasets with validation checks",
           "Designed standardized reporting templates and dashboards",
-          "Introduced repeatable reporting workflow guidance",
+          "Introduced repeatable workflow guidance for reporting cycles",
         ],
         deliverables: [
           "Indicator framework and definitions",
@@ -754,9 +829,9 @@ ACCESSIBILITY & PERFORMANCE
           "Workflow guidance for repeatable reporting cycles",
         ],
         outcomes: [
-          "Improved consistency and trust in data",
-          "Faster reporting cycles",
-          "Better-informed reviews and follow-up decisions",
+          "Improved consistency and trust in outputs",
+          "Faster reporting cycles with fewer corrections",
+          "Clearer reviews and follow-up actions",
         ],
         timeline: "4–8 weeks (scope dependent)",
       },
@@ -764,7 +839,7 @@ ACCESSIBILITY & PERFORMANCE
   },
 
   // -----------------------------
-  // INSIGHTS
+  // INSIGHTS (fix hero path)
   // -----------------------------
   insights: {
     seo: {
@@ -780,9 +855,9 @@ ACCESSIBILITY & PERFORMANCE
         "Short, practical notes on analytics, reporting, product delivery, and decision support—focused on what works in real organizations.",
       media: {
         type: "image",
-        src: "/images/hero/insights-01.webp",
+        src: "/images/hero/hero-insights.webp",
         alt: "Professional workspace with analytics planning",
-        overlay: { type: "gradient", pattern: "/images/patterns/dot-matrix.svg" },
+        overlay: { type: "gradient", pattern: "/images/patterns/pattern-dot-matrix.svg" },
       },
     },
 
@@ -826,7 +901,7 @@ Log exceptions. A visible exception list helps teams fix issues systematically.`
         category: "Dashboards",
         icon: "LayoutDashboard",
         excerpt:
-          "A dashboard is successful when it supports a meeting and produces a clear action. Here's a structure that makes dashboards usable.",
+          "A dashboard is successful when it supports a meeting and produces a clear action. Here’s a structure that makes dashboards usable.",
         markdownBody: `## Start with the decision
 Before building, ask: what decision changes if this KPI changes?
 
@@ -849,7 +924,7 @@ Automate what can be sustained. A dashboard that breaks weekly will be abandoned
         category: "Digital Strategy",
         icon: "Megaphone",
         excerpt:
-          "Good digital strategy is not noise—it is clarity. Here's how to structure messaging, content, UX, and SEO to build trust and conversion over time.",
+          "Good digital strategy is not noise—it is clarity. Here’s how to structure messaging, content, UX, and SEO to build trust and conversion over time.",
         markdownBody: `## Start with the offer
 If your visitor cannot say what you do in 10 seconds, conversion drops.
 
@@ -866,7 +941,7 @@ Strong page structure and consistent keywords help the right clients find you.`,
   },
 
   // -----------------------------
-  // ABOUT
+  // ABOUT (fix hero path)
   // -----------------------------
   about: {
     seo: {
@@ -882,9 +957,9 @@ Strong page structure and consistent keywords help the right clients find you.`,
         "We combine data science, statistics, software engineering, education expertise, and content strategy—so solutions are technically sound and practically adoptable.",
       media: {
         type: "image",
-        src: "/images/hero/about-01.webp",
+        src: "/images/hero/hero-about.webp",
         alt: "Team collaboration in a modern work setting",
-        overlay: { type: "gradient", pattern: "/images/patterns/subtle-grid.svg" },
+        overlay: { type: "gradient", pattern: "/images/patterns/pattern-grid.svg" },
       },
     },
 
@@ -892,23 +967,39 @@ Strong page structure and consistent keywords help the right clients find you.`,
       title: "What we do and why it works",
       icon: "Compass",
       paragraphs: [
-        "Organizations often face the same obstacles: unclear indicators, inconsistent data, delayed reporting, and tools that don't match how teams operate. These challenges slow down decisions and reduce confidence in results.",
+        "Organizations often face the same obstacles: unclear indicators, inconsistent data, delayed reporting, and tools that don’t match how teams operate. These challenges slow decisions and reduce confidence in results.",
         "We address both sides of the problem. We build systems and workflows, and we ensure the underlying data and methods are reliable, interpretable, and defensible.",
-        "We also emphasize adoption. Good solutions are not only correct—they must be usable. That is why we include documentation, training, and structured handover as part of delivery.",
+        "We also emphasize adoption. Good solutions are not only correct—they must be usable. That’s why documentation, training, and structured handover are part of delivery.",
       ],
     },
 
     principles: {
       title: "Principles",
       items: [
-        { title: "Clarity before complexity", icon: "Sparkles",
-          detail: "We clarify objectives, indicators, and workflows first. Tools should serve clarity—not replace it." },
-        { title: "Quality built into the workflow", icon: "BadgeCheck",
-          detail: "Validation and reconciliation checks protect consistency across reports and linked outputs." },
-        { title: "Usability and adoption", icon: "MousePointerClick",
-          detail: "We design for real users and operating conditions so the solution is used and sustained." },
-        { title: "Transfer and sustainability", icon: "GraduationCap",
-          detail: "Documentation, training, and handover are part of delivery—not optional extras." },
+        {
+          title: "Clarity before complexity",
+          icon: "Sparkles",
+          detail:
+            "We clarify objectives, indicators, and workflows first. Tools should serve clarity—not replace it.",
+        },
+        {
+          title: "Quality built into the workflow",
+          icon: "BadgeCheck",
+          detail:
+            "Validation and reconciliation checks protect consistency across reports and linked outputs.",
+        },
+        {
+          title: "Usability and adoption",
+          icon: "MousePointerClick",
+          detail:
+            "We design for real users and operating conditions so the solution is used and sustained.",
+        },
+        {
+          title: "Transfer and sustainability",
+          icon: "GraduationCap",
+          detail:
+            "Documentation, training, and handover are part of delivery—not optional extras.",
+        },
       ],
     },
 
@@ -932,7 +1023,7 @@ Strong page structure and consistent keywords help the right clients find you.`,
   },
 
   // -----------------------------
-  // CONTACT
+  // CONTACT (fix details emails + paths)
   // -----------------------------
   contact: {
     seo: {
@@ -945,18 +1036,20 @@ Strong page structure and consistent keywords help the right clients find you.`,
     hero: {
       title: "Contact us",
       subtitle:
-        "Tell us what decision you want to improve. We'll propose a practical approach, deliverables, and timeline.",
+        "Tell us what decision you want to improve. We’ll propose a practical approach, deliverables, and timeline.",
       media: {
         type: "image",
-        src: "/images/hero/contact-01.webp",
+        src: "/images/hero/hero-contact.webp",
         alt: "Professional consultation setting",
-        overlay: { type: "gradient", pattern: "/images/patterns/geo-lines.svg" },
+        overlay: { type: "gradient", pattern: "/images/patterns/pattern-geo-lines.svg" },
       },
     },
 
     details: {
+      // corrected as per your update (mstatili_tech@gmail.com -> mstatilitechnologies@gmail.com)
       emails: ["info@mstatilitechnologies.com", "mstatilitechnologies@gmail.com"],
       phoneWhatsApp: "+254 708 385 523",
+      bookingLink: "https://calendar.app.google/Q2yec8nmeLsN9g1t8",
       contactCards: [
         {
           title: "Book a consultation",
@@ -967,7 +1060,7 @@ Strong page structure and consistent keywords help the right clients find you.`,
         {
           title: "Email",
           icon: "Mail",
-          description: "Send a brief overview and we'll respond with next steps.",
+          description: "Send a brief overview and we’ll respond with next steps.",
           href: "mailto:info@mstatilitechnologies.com",
         },
         {
@@ -982,7 +1075,7 @@ Strong page structure and consistent keywords help the right clients find you.`,
     booking: {
       title: "Book a consultation",
       description:
-        "Prefer a call? Use the booking link to choose a suitable time. If you're not ready, send a message and we'll respond with next steps.",
+        "Prefer a call? Use the booking link to choose a suitable time. If you’re not ready, send a message and we’ll respond with next steps.",
       link: {
         label: "Book a consultation",
         icon: "CalendarCheck",
@@ -1009,11 +1102,12 @@ Strong page structure and consistent keywords help the right clients find you.`,
             "Data strategy & governance",
             "Dashboards & reporting",
             "M&E frameworks / indicators",
-            "Data cleaning, processing & validation",
+            "Data cleaning, validation & reconciliation",
             "Automation & data pipelines",
             "Forecasting & scenario analysis",
             "Surveys & data collection",
             "Training & capacity building",
+            "Research support (study design, analysis, reporting)",
             "Digital strategy (brand/content/UI-UX/SEO)",
             "Other",
           ],
@@ -1033,7 +1127,7 @@ Strong page structure and consistent keywords help the right clients find you.`,
       submit: "Send message",
       successTitle: "Message received",
       successMessage:
-        "Thanks for reaching out. We'll respond with next steps and, where relevant, a short clarification list to confirm scope.",
+        "Thanks for reaching out. We’ll respond with next steps and, where relevant, a short clarification list to confirm scope.",
     },
   },
 
@@ -1051,8 +1145,8 @@ Strong page structure and consistent keywords help the right clients find you.`,
       { label: "Contact", href: "/contact" },
     ],
     legal: {
-      copyright: `© ${new Date().getFullYear()} Mstatili Technologies. All rights reserved.`,
-      note: "Case studies may be presented in anonymized form to respect confidentiality.",
+      copyright: `© ${new Date().getFullYear()} Mstatili Technologies. Minding your Business.`,
+      note: "Case studies may be presented in anonymized or illustrative form to respect confidentiality.",
     },
   },
 };
