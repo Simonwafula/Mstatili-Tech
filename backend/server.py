@@ -1,51 +1,159 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request, status
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, Field, field_validator
 from pymongo import MongoClient
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
 import os
 from datetime import datetime
 import uuid
+import logging
+from typing import Optional
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - [%(request_id)s] - %(message)s'
+)
+logger = logging.getLogger(__name__)
+
+# Rate limiter setup
+limiter = Limiter(key_func=get_remote_address)
 app = FastAPI(title="Mstatili Tech and Data Solutions API")
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
-# CORS middleware
+# CORS middleware with env-based restrictions
+ALLOWED_ORIGINS = os.environ.get('ALLOWED_ORIGINS', 'http://localhost:3000').split(',')
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST"],
     allow_headers=["*"],
 )
+
+# Request logging middleware
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    request_id = str(uuid.uuid4())
+    request.state.request_id = request_id
+    
+    logger.info(f"Request started: {request.method} {request.url.path}", 
+                extra={'request_id': request_id})
+    
+    response = await call_next(request)
+    
+    logger.info(f"Request completed: {request.method} {request.url.path} - Status: {response.status_code}",
+                extra={'request_id': request_id})
+    
+    return response
 
 # MongoDB connection
 MONGO_URL = os.environ.get('MONGO_URL')
 client = MongoClient(MONGO_URL)
 db = client.mstatili_db
 
-# Pydantic models
+# Email notification helper (optional SMTP support)
+async def send_notification_email(data: dict):
+    """Send email notification for new submissions (optional)"""
+    smtp_host = os.environ.get('SMTP_HOST')
+    smtp_port = os.environ.get('SMTP_PORT')
+    smtp_user = os.environ.get('SMTP_USER')
+    smtp_pass = os.environ.get('SMTP_PASS')
+    notification_recipient = os.environ.get('NOTIFICATION_EMAIL')
+    
+    # Skip if SMTP not configured
+    if not all([smtp_host, smtp_port, smtp_user, smtp_pass, notification_recipient]):
+        return
+    
+    try:
+        msg = MIMEMultipart()
+        msg['From'] = smtp_user
+        msg['To'] = notification_recipient
+        msg['Subject'] = f"New Contact Form Submission from {data.get('name')}"
+        
+        body = f"""
+New contact form submission:
+
+Name: {data.get('name')}
+Email: {data.get('email')}
+Phone: {data.get('phone')}
+Company: {data.get('company', 'N/A')}
+Service: {data.get('service', data.get('service_type', 'N/A'))}
+Message: {data.get('message', data.get('project_details', 'N/A'))}
+
+Organization Type: {data.get('organizationType', 'N/A')}
+Timeline: {data.get('timeline', 'N/A')}
+Budget Range: {data.get('budgetRange', data.get('budget_range', 'N/A'))}
+Preferred Contact: {data.get('preferredContactMethod', 'N/A')}
+
+Submitted: {data.get('created_at')}
+        """
+        
+        msg.attach(MIMEText(body, 'plain'))
+        
+        with smtplib.SMTP(smtp_host, int(smtp_port)) as server:
+            server.starttls()
+            server.login(smtp_user, smtp_pass)
+            server.send_message(msg)
+            
+        logger.info(f"Notification email sent for submission {data.get('id')}")
+    except Exception as e:
+        logger.error(f"Failed to send notification email: {str(e)}")
+        # Don't fail the request if email fails
+        pass
+
+# Pydantic models with validation
 class ContactForm(BaseModel):
-    name: str
+    name: str = Field(..., min_length=2, max_length=100)
     email: EmailStr
-    phone: str
-    company: str
-    service: str
-    message: str
+    phone: str = Field(..., min_length=10, max_length=20)
+    company: str = Field(..., min_length=2, max_length=100)
+    service: str = Field(..., min_length=2, max_length=100)
+    message: str = Field(..., min_length=10, max_length=2000)
+    organizationType: Optional[str] = Field(None, max_length=50)
+    timeline: Optional[str] = Field(None, max_length=50)
+    budgetRange: Optional[str] = Field(None, max_length=50)
+    preferredContactMethod: Optional[str] = Field(None, max_length=20)
+    honeypot: Optional[str] = Field(None, max_length=0)  # Spam trap
+    
+    @field_validator('honeypot')
+    @classmethod
+    def honeypot_must_be_empty(cls, v):
+        if v:
+            raise ValueError('Invalid form submission')
+        return v
 
 class ServiceInquiry(BaseModel):
-    name: str
+    name: str = Field(..., min_length=2, max_length=100)
     email: EmailStr
-    phone: str
-    service_type: str
-    project_details: str
-    budget_range: str
-    timeline: str
+    phone: str = Field(..., min_length=10, max_length=20)
+    service_type: str = Field(..., min_length=2, max_length=100)
+    project_details: str = Field(..., min_length=10, max_length=2000)
+    budget_range: str = Field(..., max_length=50)
+    timeline: str = Field(..., max_length=50)
+    honeypot: Optional[str] = Field(None, max_length=0)  # Spam trap
+    
+    @field_validator('honeypot')
+    @classmethod
+    def honeypot_must_be_empty(cls, v):
+        if v:
+            raise ValueError('Invalid form submission')
+        return v
 
 @app.get("/api/")
-async def root():
+@limiter.limit("30/minute")
+async def root(request: Request):
     return {"message": "Welcome to Mstatili Tech and Data Solutions API"}
 
 @app.post("/api/contact")
-async def submit_contact_form(contact: ContactForm):
+@limiter.limit("5/minute")
+async def submit_contact_form(contact: ContactForm, request: Request):
     try:
         contact_data = {
             "id": str(uuid.uuid4()),
@@ -55,22 +163,43 @@ async def submit_contact_form(contact: ContactForm):
             "company": contact.company,
             "service": contact.service,
             "message": contact.message,
+            "organizationType": contact.organizationType,
+            "timeline": contact.timeline,
+            "budgetRange": contact.budgetRange,
+            "preferredContactMethod": contact.preferredContactMethod,
             "created_at": datetime.utcnow(),
-            "status": "new"
+            "status": "new",
+            "ip_address": get_remote_address(request)
         }
         
         result = db.contacts.insert_one(contact_data)
         
         if result.inserted_id:
+            logger.info(f"Contact form submitted: {contact.email}", 
+                       extra={'request_id': request.state.request_id})
+            
+            # Optional: Send notification email
+            await send_notification_email(contact_data)
+            
             return {"message": "Thank you for your inquiry! We'll get back to you soon.", "success": True}
         else:
             raise HTTPException(status_code=500, detail="Failed to submit form")
     
+    except ValueError as e:
+        # Honeypot triggered
+        logger.warning(f"Honeypot triggered from {get_remote_address(request)}", 
+                      extra={'request_id': request.state.request_id})
+        # Return success to avoid revealing spam detection
+        return {"message": "Thank you for your inquiry! We'll get back to you soon.", "success": True}
+    
     except Exception as e:
+        logger.error(f"Error submitting contact form: {str(e)}", 
+                    extra={'request_id': request.state.request_id})
         raise HTTPException(status_code=500, detail=f"Error submitting form: {str(e)}")
 
 @app.post("/api/service-inquiry")
-async def submit_service_inquiry(inquiry: ServiceInquiry):
+@limiter.limit("5/minute")
+async def submit_service_inquiry(inquiry: ServiceInquiry, request: Request):
     try:
         inquiry_data = {
             "id": str(uuid.uuid4()),
@@ -82,21 +211,36 @@ async def submit_service_inquiry(inquiry: ServiceInquiry):
             "budget_range": inquiry.budget_range,
             "timeline": inquiry.timeline,
             "created_at": datetime.utcnow(),
-            "status": "new"
+            "status": "new",
+            "ip_address": get_remote_address(request)
         }
         
         result = db.service_inquiries.insert_one(inquiry_data)
         
         if result.inserted_id:
+            logger.info(f"Service inquiry submitted: {inquiry.email}", 
+                       extra={'request_id': request.state.request_id})
+            
+            await send_notification_email(inquiry_data)
+            
             return {"message": "Service inquiry submitted successfully! Our team will contact you soon.", "success": True}
         else:
             raise HTTPException(status_code=500, detail="Failed to submit inquiry")
     
+    except ValueError as e:
+        # Honeypot triggered
+        logger.warning(f"Honeypot triggered from {get_remote_address(request)}", 
+                      extra={'request_id': request.state.request_id})
+        return {"message": "Service inquiry submitted successfully! Our team will contact you soon.", "success": True}
+    
     except Exception as e:
+        logger.error(f"Error submitting service inquiry: {str(e)}", 
+                    extra={'request_id': request.state.request_id})
         raise HTTPException(status_code=500, detail=f"Error submitting inquiry: {str(e)}")
 
 @app.get("/api/services")
-async def get_services():
+@limiter.limit("30/minute")
+async def get_services(request: Request):
     services = [
         {
             "id": "branding",
@@ -172,7 +316,8 @@ async def get_services():
     return {"services": services}
 
 @app.get("/api/data-solutions-detail")
-async def get_data_solutions_detail():
+@limiter.limit("30/minute")
+async def get_data_solutions_detail(request: Request):
     data_solutions = {
         "title": "Data Solutions & Ecosystem Planning",
         "subtitle": "From Strategy to Implementation - Complete Data Transformation",
