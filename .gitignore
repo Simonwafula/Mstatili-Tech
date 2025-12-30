@@ -8,10 +8,10 @@ frontend/node_modules/
 .pnp
 .pnp.js
 
-# Build outputs
-frontend/build/
-build/
-dist/
+# # Build outputs
+# frontend/build/
+# build/
+# dist/
 
 # Logs
 npm-debug.log*
