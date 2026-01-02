@@ -64,8 +64,8 @@ develop-eggs/
 downloads/
 eggs/
 .eggs/
-# lib/ - commented out to allow frontend/src/lib/
-# lib64/ - commented out
+lib/
+lib64/
 parts/
 sdist/
 var/
