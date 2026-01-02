@@ -1,7 +1,6 @@
 from fastapi import FastAPI, HTTPException, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, EmailStr, Field, field_validator
-from pymongo import MongoClient
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
@@ -13,6 +12,8 @@ from typing import Optional
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+import sqlite3
+from contextlib import contextmanager
 
 # Configure logging
 logging.basicConfig(
@@ -37,6 +38,71 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# SQLite Database Setup
+DATABASE_PATH = os.environ.get('DATABASE_PATH', '/home/mstatilitechnologies.com/data/mstatili.db')
+
+def init_database():
+    """Initialize SQLite database with required tables"""
+    os.makedirs(os.path.dirname(DATABASE_PATH), exist_ok=True)
+    
+    with get_db_connection() as conn:
+        cursor = conn.cursor()
+        
+        # Create contacts table
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS contacts (
+                id TEXT PRIMARY KEY,
+                name TEXT NOT NULL,
+                email TEXT NOT NULL,
+                phone TEXT NOT NULL,
+                company TEXT NOT NULL,
+                service TEXT NOT NULL,
+                message TEXT NOT NULL,
+                organization_type TEXT,
+                timeline TEXT,
+                budget_range TEXT,
+                preferred_contact_method TEXT,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                status TEXT DEFAULT 'new',
+                ip_address TEXT
+            )
+        ''')
+        
+        # Create service_inquiries table
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS service_inquiries (
+                id TEXT PRIMARY KEY,
+                name TEXT NOT NULL,
+                email TEXT NOT NULL,
+                phone TEXT NOT NULL,
+                service_type TEXT NOT NULL,
+                project_details TEXT NOT NULL,
+                budget_range TEXT,
+                timeline TEXT,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                status TEXT DEFAULT 'new',
+                ip_address TEXT
+            )
+        ''')
+        
+        conn.commit()
+        logger.info("Database initialized successfully")
+
+@contextmanager
+def get_db_connection():
+    """Context manager for database connections"""
+    conn = sqlite3.connect(DATABASE_PATH)
+    conn.row_factory = sqlite3.Row
+    try:
+        yield conn
+    finally:
+        conn.close()
+
+# Initialize database on startup
+@app.on_event("startup")
+async def startup_event():
+    init_database()
+
 # Request logging middleware
 @app.middleware("http")
 async def log_requests(request: Request, call_next):
@@ -52,11 +118,6 @@ async def log_requests(request: Request, call_next):
                 extra={'request_id': request_id})
     
     return response
-
-# MongoDB connection
-MONGO_URL = os.environ.get('MONGO_URL')
-client = MongoClient(MONGO_URL)
-db = client.mstatili_db
 
 # Email notification helper (optional SMTP support)
 async def send_notification_email(data: dict):
@@ -87,10 +148,10 @@ Company: {data.get('company', 'N/A')}
 Service: {data.get('service', data.get('service_type', 'N/A'))}
 Message: {data.get('message', data.get('project_details', 'N/A'))}
 
-Organization Type: {data.get('organizationType', 'N/A')}
+Organization Type: {data.get('organization_type', 'N/A')}
 Timeline: {data.get('timeline', 'N/A')}
-Budget Range: {data.get('budgetRange', data.get('budget_range', 'N/A'))}
-Preferred Contact: {data.get('preferredContactMethod', 'N/A')}
+Budget Range: {data.get('budget_range', 'N/A')}
+Preferred Contact: {data.get('preferred_contact_method', 'N/A')}
 
 Submitted: {data.get('created_at')}
         """
@@ -151,6 +212,16 @@ class ServiceInquiry(BaseModel):
 async def root(request: Request):
     return {"message": "Welcome to Mstatili Tech and Data Solutions API"}
 
+@app.get("/api/health")
+async def health_check():
+    """Health check endpoint for monitoring"""
+    try:
+        with get_db_connection() as conn:
+            conn.execute("SELECT 1")
+        return {"status": "healthy", "database": "connected"}
+    except Exception as e:
+        return {"status": "unhealthy", "database": str(e)}
+
 @app.post("/api/contact")
 @limiter.limit("5/minute")
 async def submit_contact_form(contact: ContactForm, request: Request):
@@ -163,27 +234,40 @@ async def submit_contact_form(contact: ContactForm, request: Request):
             "company": contact.company,
             "service": contact.service,
             "message": contact.message,
-            "organizationType": contact.organizationType,
+            "organization_type": contact.organizationType,
             "timeline": contact.timeline,
-            "budgetRange": contact.budgetRange,
-            "preferredContactMethod": contact.preferredContactMethod,
-            "created_at": datetime.utcnow(),
+            "budget_range": contact.budgetRange,
+            "preferred_contact_method": contact.preferredContactMethod,
+            "created_at": datetime.utcnow().isoformat(),
             "status": "new",
             "ip_address": get_remote_address(request)
         }
         
-        result = db.contacts.insert_one(contact_data)
+        with get_db_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute('''
+                INSERT INTO contacts (
+                    id, name, email, phone, company, service, message,
+                    organization_type, timeline, budget_range, 
+                    preferred_contact_method, created_at, status, ip_address
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ''', (
+                contact_data['id'], contact_data['name'], contact_data['email'],
+                contact_data['phone'], contact_data['company'], contact_data['service'],
+                contact_data['message'], contact_data['organization_type'],
+                contact_data['timeline'], contact_data['budget_range'],
+                contact_data['preferred_contact_method'], contact_data['created_at'],
+                contact_data['status'], contact_data['ip_address']
+            ))
+            conn.commit()
         
-        if result.inserted_id:
-            logger.info(f"Contact form submitted: {contact.email}", 
-                       extra={'request_id': request.state.request_id})
-            
-            # Optional: Send notification email
-            await send_notification_email(contact_data)
-            
-            return {"message": "Thank you for your inquiry! We'll get back to you soon.", "success": True}
-        else:
-            raise HTTPException(status_code=500, detail="Failed to submit form")
+        logger.info(f"Contact form submitted: {contact.email}", 
+                   extra={'request_id': request.state.request_id})
+        
+        # Optional: Send notification email
+        await send_notification_email(contact_data)
+        
+        return {"message": "Thank you for your inquiry! We'll get back to you soon.", "success": True}
     
     except ValueError as e:
         # Honeypot triggered
@@ -210,22 +294,33 @@ async def submit_service_inquiry(inquiry: ServiceInquiry, request: Request):
             "project_details": inquiry.project_details,
             "budget_range": inquiry.budget_range,
             "timeline": inquiry.timeline,
-            "created_at": datetime.utcnow(),
+            "created_at": datetime.utcnow().isoformat(),
             "status": "new",
             "ip_address": get_remote_address(request)
         }
         
-        result = db.service_inquiries.insert_one(inquiry_data)
+        with get_db_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute('''
+                INSERT INTO service_inquiries (
+                    id, name, email, phone, service_type, project_details,
+                    budget_range, timeline, created_at, status, ip_address
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ''', (
+                inquiry_data['id'], inquiry_data['name'], inquiry_data['email'],
+                inquiry_data['phone'], inquiry_data['service_type'],
+                inquiry_data['project_details'], inquiry_data['budget_range'],
+                inquiry_data['timeline'], inquiry_data['created_at'],
+                inquiry_data['status'], inquiry_data['ip_address']
+            ))
+            conn.commit()
         
-        if result.inserted_id:
-            logger.info(f"Service inquiry submitted: {inquiry.email}", 
-                       extra={'request_id': request.state.request_id})
-            
-            await send_notification_email(inquiry_data)
-            
-            return {"message": "Service inquiry submitted successfully! Our team will contact you soon.", "success": True}
-        else:
-            raise HTTPException(status_code=500, detail="Failed to submit inquiry")
+        logger.info(f"Service inquiry submitted: {inquiry.email}", 
+                   extra={'request_id': request.state.request_id})
+        
+        await send_notification_email(inquiry_data)
+        
+        return {"message": "Service inquiry submitted successfully! Our team will contact you soon.", "success": True}
     
     except ValueError as e:
         # Honeypot triggered
@@ -370,4 +465,4 @@ async def get_data_solutions_detail(request: Request):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8001)
+    uvicorn.run(app, host="0.0.0.0", port=8000)
