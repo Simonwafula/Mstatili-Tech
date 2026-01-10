@@ -3,8 +3,8 @@ Description=Mstatili Backend (Gunicorn + Uvicorn)
 After=network.target
 
 [Service]
-User=mstat9401
-Group=mstat9401
+User=mstat8499
+Group=mstat8499
 WorkingDirectory=/home/mstatilitechnologies.com/public_html/backend
 EnvironmentFile=/home/mstatilitechnologies.com/.env
 ExecStart=/home/mstatilitechnologies.com/venv/bin/gunicorn -k uvicorn.workers.UvicornWorker server:app -b 127.0.0.1:8000 --workers 2 --log-level info --access-logfile /home/mstatilitechnologies.com/logs/access.log --error-logfile /home/mstatilitechnologies.com/logs/error.log

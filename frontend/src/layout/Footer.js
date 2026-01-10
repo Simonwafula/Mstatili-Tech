@@ -16,7 +16,7 @@ export default function Footer() {
             <img 
               src="/images/brand/mstatili-logo.png" 
               alt={`${company.name} Logo`}
-              className="h-8 w-auto object-contain object-left mb-4 brightness-0 invert opacity-80"
+              className="h-10 w-auto object-contain object-left mb-4 brightness-0 invert opacity-80"
             />
             <p className="text-sm leading-relaxed max-w-xs">
               {footer.shortStatement}

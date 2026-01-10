@@ -86,25 +86,34 @@ cp "${PUBLIC_HTML}/deploy/mstatili-backend.service" /etc/systemd/system/
 systemctl daemon-reload
 systemctl enable mstatili-backend
 
-# Configure OpenLiteSpeed External App
-echo "[7/8] OpenLiteSpeed Configuration..."
-echo ""
-echo "IMPORTANT: You need to manually configure OpenLiteSpeed in CyberPanel"
-echo "to proxy /api/ requests to the backend."
-echo ""
-echo "Option A: Use .htaccess (already in place at ${PUBLIC_HTML}/.htaccess)"
-echo ""
-echo "Option B: Configure via CyberPanel WebAdmin:"
-echo "  1. Go to WebAdmin Console > Virtual Hosts > ${DOMAIN}"
-echo "  2. Under 'External App', add new external app:"
-echo "     - Name: mstatili_backend"
-echo "     - Address: 127.0.0.1:8000"
-echo "     - Type: Web Server"
-echo "  3. Under 'Context', add new proxy context:"
-echo "     - URI: /api/"
-echo "     - External App: mstatili_backend"
-echo "  4. Restart OpenLiteSpeed"
-echo ""
+# Configure OpenLiteSpeed Proxy for API
+echo "[7/8] OpenLiteSpeed Proxy Configuration..."
+VHOST_CONF="/usr/local/lsws/conf/vhosts/${DOMAIN}/vhost.conf"
+PROXY_CONF="${PUBLIC_HTML}/deploy/vhost-proxy.conf"
+
+if [ -f "${VHOST_CONF}" ]; then
+    # Check if proxy config already exists
+    if grep -q "mstatili_backend" "${VHOST_CONF}"; then
+        echo "Proxy configuration already exists in vhost.conf"
+    else
+        echo "Adding proxy configuration to vhost.conf..."
+        cat "${PROXY_CONF}" >> "${VHOST_CONF}"
+        echo "Proxy configuration added successfully"
+    fi
+
+    # Restart LiteSpeed
+    echo "Restarting OpenLiteSpeed..."
+    /usr/local/lsws/bin/lswsctrl restart
+else
+    echo ""
+    echo "WARNING: vhost.conf not found at ${VHOST_CONF}"
+    echo "You need to manually add the proxy configuration."
+    echo ""
+    echo "Append contents of ${PROXY_CONF} to your vhost.conf:"
+    echo "  cat ${PROXY_CONF} >> ${VHOST_CONF}"
+    echo "  /usr/local/lsws/bin/lswsctrl restart"
+    echo ""
+fi
 
 # Start the backend service
 echo "[8/8] Starting backend service..."
