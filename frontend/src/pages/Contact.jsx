@@ -13,12 +13,13 @@ export default function Contact() {
   const [form, setForm] = useState({
     name: "",
     email: "",
+    phone: "",
     organization: "",
     organizationType: formConfig.fields?.organizationType?.options?.[0] || "",
     interest: "",
     timeline: formConfig.fields?.timeline?.options?.[3] || "Flexible",
     message: "",
-    website: "", // honeypot
+    honeypot: "", // spam trap
   });
 
   const [status, setStatus] = useState({ state: "idle", message: "" });
@@ -33,10 +34,13 @@ export default function Contact() {
       await api.post("/api/contact", {
         name: form.name,
         email: form.email,
-        company: form.organization || null,
-        service: form.interest || null,
+        phone: form.phone,
+        company: form.organization || "Not provided",
+        service: form.interest || "General inquiry",
         message: form.message,
-        website: form.website,
+        organizationType: form.organizationType || null,
+        timeline: form.timeline || null,
+        honeypot: form.honeypot,
       });
 
       navigate("/thank-you");
@@ -119,10 +123,10 @@ export default function Contact() {
                 <p className="text-neutral-600 mb-8">{formConfig.description}</p>
 
                 <form onSubmit={onSubmit} aria-label="Contact form">
-                  {/* Honeypot */}
-                  <div className="hidden">
-                    <label htmlFor="website">Website</label>
-                    <input id="website" value={form.website} onChange={onChange("website")} type="text" />
+                  {/* Honeypot - hidden spam trap */}
+                  <div className="hidden" aria-hidden="true">
+                    <label htmlFor="honeypot">Leave empty</label>
+                    <input id="honeypot" value={form.honeypot} onChange={onChange("honeypot")} type="text" tabIndex={-1} autoComplete="off" />
                   </div>
 
                   <div className="grid gap-6 md:grid-cols-2">
@@ -149,6 +153,19 @@ export default function Contact() {
                         className="input"
                         type="email"
                         autoComplete="email"
+                      />
+                    </Field>
+
+                    <Field label="Phone" htmlFor="phone" required>
+                      <input
+                        id="phone"
+                        required
+                        value={form.phone}
+                        onChange={onChange("phone")}
+                        placeholder="+254 7XX XXX XXX"
+                        className="input"
+                        type="tel"
+                        autoComplete="tel"
                       />
                     </Field>
 

@@ -8,8 +8,8 @@ set -e
 
 # Configuration
 DOMAIN="mstatilitechnologies.com"
-USER="mstat9401"
-GROUP="mstat9401"
+USER="mstat8499"
+GROUP="mstat8499"
 HOME_DIR="/home/${DOMAIN}"
 PUBLIC_HTML="${HOME_DIR}/public_html"
 VENV_DIR="${HOME_DIR}/venv"
